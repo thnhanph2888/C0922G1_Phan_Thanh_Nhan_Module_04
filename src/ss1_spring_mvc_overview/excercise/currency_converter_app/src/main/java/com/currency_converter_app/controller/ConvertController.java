@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class ConvertController {
-    private final int EXCHANGE_RATE = 22000;
+    private final double EXCHANGE_RATE = 22000;
 
     @GetMapping("")
     public String showForm() {
@@ -18,7 +18,7 @@ public class ConvertController {
 
     @PostMapping("/convert")
     public ModelAndView convertUsdToVnd(@RequestParam int usd) {
-        int vnd = usd * EXCHANGE_RATE;
+        double vnd = usd * EXCHANGE_RATE;
         ModelAndView modelAndView = new ModelAndView("result", "vnd", vnd);
         return modelAndView;
     }
