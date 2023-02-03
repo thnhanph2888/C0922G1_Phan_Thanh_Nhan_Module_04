@@ -1,5 +1,6 @@
-package com.customer_management;
+package com.customer_management.configuration;
 
+import com.customer_management.configuration.AppConfiguration;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class AppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {

@@ -8,6 +8,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class CalculatorController {
+
+
     @GetMapping("")
     public String showHome() {
         return "home";
