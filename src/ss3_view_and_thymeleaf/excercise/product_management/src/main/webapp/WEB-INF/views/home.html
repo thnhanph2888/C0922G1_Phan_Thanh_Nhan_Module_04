@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <style>
+         th {
+             color: white;
+             background-color: green;
+            border: 1px solid green;
+            padding: 10px;
+        }
+        td{
+            border-radius: 4px ;
+            border: 1px solid green;
+            padding: 10px;
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+</head>
+<body>
+
+
+<!-- Modal -->
+<div class="modal fade" id="delete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="/product/delete" method="post">
+                <div class="modal-body">
+                    <input id="idDelete" name="idDelete">
+                    <span>Xác nhận xóa</span>
+                    <span id="nameDelete"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<h1>Home</h1>
+<h3 th:text="${success}"></h3>
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Description</th>
+            <th>Producer</th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr th:each="product : ${products}" >
+            <td th:text="${product.getId()}" th:value="${product.getId()}"></td>
+            <td th:text="${product.getName()}" th:value="${product.getName()}"></td>
+            <td th:text="${product.getPrice()}" th:value="${product.getPrice()}"></td>
+            <td th:text="${product.getDescription()}" th:value="${product.getDescription()}"></td>
+            <td th:text="${product.getProducer()}" th:value="${product.getProducer()}"></td>
+            <td>
+                <button ><a th:href="@{/product/showUpdate/__${product.getName()}__}">update</a></button>
+            </td>
+            <td>
+                <button th:value="${product.getName()}" onclick="setInfoDelete(this.value)" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#delete">
+                    delete
+                </button>
+            </td>
+        </tr>
+    </table>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
+<script>
+    function setInfoDelete(name) {
+        document.getElementById("")
+        document.getElementById("nameDelete").innerText = name;
+    }
+</script>
+</html>
