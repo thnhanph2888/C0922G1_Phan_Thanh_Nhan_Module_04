@@ -60,7 +60,6 @@
     </form>
 </div>
 
-
 <h3 th:text="${message}"></h3>
 <table>
     <tr>
@@ -86,7 +85,7 @@
             <button><a th:href="@{/product/detail/__${product.getId()}__}">view</a></button>
         </td>
         <td>
-            <button><a th:href="@{/product/showUpdate/__${product.getName()}__}">update</a></button>
+            <button><a th:href="@{/product/showUpdate/__${product.getId()}__}">update</a></button>
         </td>
         <td>
             <button th:onclick="|setInfoDelete('${product.getId()}','${product.getName()}')|" type="button"

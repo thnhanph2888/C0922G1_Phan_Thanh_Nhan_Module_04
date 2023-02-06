@@ -26,7 +26,7 @@ public class ProductRepository implements IProductRepository {
 
     @Override
     public boolean addProduct(Product product) {
-        if (productMap.get(product.getId()) != null) {
+        if (productMap.get(product.getId()) == null) {
             productMap.put(product.getId(), product);
             return true;
         }
@@ -49,6 +49,11 @@ public class ProductRepository implements IProductRepository {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public Product findById(int id) {
+        return productMap.get(id);
     }
 
     @Override

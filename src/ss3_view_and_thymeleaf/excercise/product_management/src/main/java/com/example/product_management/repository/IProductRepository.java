@@ -9,6 +9,6 @@ public interface IProductRepository {
     boolean addProduct(Product product);
     boolean updateProduct(int idUpdate, Product product);
     boolean deleteProduct(int idDelete);
-
+    Product findById(int id);
     Product findByName(String name);
 }

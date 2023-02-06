@@ -1,16 +1,17 @@
-package com.example.product_management.controller;
-
-import com.example.product_management.model.Product;
-import com.example.product_management.service.impl.ProductService;
+package com.example.product_management_jpa.controller;
+import com.example.product_management_jpa.model.Product;
+import com.example.product_management_jpa.service.impl.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/product")
@@ -20,12 +21,12 @@ public class ProductController {
 
     @GetMapping("")
     public String showListProduct(Model model) {
-        model.addAttribute("products", productService.getListProduct());
+        model.addAttribute("products", productService.findAll());
         return "home";
     }
-    @GetMapping("/showUpdate/{name}")
-    public String showFormUpdate(@PathVariable String name, Model model){
-        model.addAttribute("product", productService.findByName(name));
+    @GetMapping("/showUpdate/{id}")
+    public String showFormUpdate(@PathVariable int id, Model model){
+        model.addAttribute("product", productService.findById(id));
         return "update";
     }
 
@@ -37,9 +38,9 @@ public class ProductController {
 
     @PostMapping("/add")
     public String showAdd(Product product, RedirectAttributes redirectAttributes){
-        if (productService.addProduct(product)) {
-             redirectAttributes.addFlashAttribute("message", "Add success^^");
-             return "redirect:/product";
+        if (productService.add(product)) {
+            redirectAttributes.addFlashAttribute("message", "Add success^^");
+            return "redirect:/product";
         }
         redirectAttributes.addFlashAttribute("message", "Add failed :(");
         return "redirect:/product";
@@ -52,7 +53,7 @@ public class ProductController {
 
     @PostMapping("/update")
     public String updateProduct(Product product, RedirectAttributes redirectAttributes){
-        if (productService.updateProduct(product.getId(), product)) {
+        if (productService.update(product)) {
             redirectAttributes.addFlashAttribute("message", "Update success ^^");
             return "redirect:/product";
         }
@@ -62,7 +63,7 @@ public class ProductController {
 
     @PostMapping("/delete")
     public String deleteProduct(HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        if (productService.deleteProduct(Integer.parseInt(request.getParameter("idDelete")))) {
+        if (productService.delete(Integer.parseInt(request.getParameter("idDelete")))) {
             redirectAttributes.addFlashAttribute("message", "Delete success ^^");
             return "redirect:/product";
         }
@@ -73,8 +74,11 @@ public class ProductController {
     @PostMapping("/find")
     public ModelAndView findByName(HttpServletRequest request) {
         String name = request.getParameter("name");
-        ArrayList<Product> products = new ArrayList<>();
-        products.add(productService.findByName(name));
-        return new ModelAndView("home", "products", products);
+        List<Product> products = productService.findByName(name);
+        ModelAndView modelAndView = new ModelAndView("home", "products", products);
+        if (products == null) {
+            modelAndView.addObject("message", "Không có dữ liệu");
+        }
+        return modelAndView;
     }
 }

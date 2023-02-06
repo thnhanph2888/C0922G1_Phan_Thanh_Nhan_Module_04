@@ -1,4 +1,4 @@
-package com.codegym.config;
+package com.example.product_management_jpa.config;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
