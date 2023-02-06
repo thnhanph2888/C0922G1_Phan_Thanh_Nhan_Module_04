@@ -1,4 +1,4 @@
-package com.example.product_management_jpa.config;
+package com.example.config;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,6 +16,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.thymeleaf.TemplateEngine;
@@ -32,7 +33,7 @@ import java.util.Properties;
 @Configuration
 @EnableWebMvc
 @EnableTransactionManagement
-@ComponentScan("com.example.product_management_jpa")
+@ComponentScan("com.example")
 public class AppConfiguration extends WebMvcConfigurerAdapter implements ApplicationContextAware {
 
     private ApplicationContext applicationContext;
@@ -87,7 +88,7 @@ public class AppConfiguration extends WebMvcConfigurerAdapter implements Applica
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
-        em.setPackagesToScan(new String[]{"com.example.product_management_jpa.model"});
+        em.setPackagesToScan(new String[]{"com.example.model"});
 
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
@@ -99,7 +100,7 @@ public class AppConfiguration extends WebMvcConfigurerAdapter implements Applica
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/jpa_product_management?createDatabaseIfNotExist=true&useSSL=false");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/new_demo_2?createDatabaseIfNotExist=true&useSSL=false");
         dataSource.setUsername("root");
         dataSource.setPassword("123456cc");
         return dataSource;
@@ -119,4 +120,6 @@ public class AppConfiguration extends WebMvcConfigurerAdapter implements Applica
         transactionManager.setEntityManagerFactory(emf);
         return transactionManager;
     }
+
+
 }

@@ -1,12 +1,12 @@
-package com.example.product_management_jpa.repository.impl;
-import com.example.product_management_jpa.model.Product;
-import com.example.product_management_jpa.repository.IProductRepository;
+package com.example.repository.impl;
+
+import com.example.model.Product;
+import com.example.repository.IProductRepository;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
@@ -21,40 +21,28 @@ public class ProductRepository implements IProductRepository {
         return productList;
     }
 
-//    @Transactional
+    @Transactional
     @Override
     public boolean add(Product product) {
-        try {
             entityManager.persist(product);
-        } catch (Exception e) {
-            return false;
-        }
         return true;
     }
-//    @Transactional
+    @Transactional
     @Override
     public boolean update(Product product) {
-        try {
             Product product1 = findById(product.getId());
             product1.setName(product.getName());
             product1.setName(product.getProducer());
             product1.setName(product.getDescription());
             product1.setName(product.getProducer());
             entityManager.merge(product1);
-        } catch (Exception e) {
-            return false;
-        }
         return true;
     }
-//    @Transactional
+    @Transactional
     @Override
     public boolean delete(int id) {
-        try {
             Product product = findById(id);
             entityManager.remove(product);
-        } catch (Exception e) {
-            return false;
-        }
         return true;
     }
 

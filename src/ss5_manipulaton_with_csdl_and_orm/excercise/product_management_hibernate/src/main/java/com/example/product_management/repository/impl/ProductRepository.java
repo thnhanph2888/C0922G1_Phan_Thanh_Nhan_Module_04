@@ -5,13 +5,13 @@ import com.example.product_management.repository.ConnectionUtil;
 import com.example.product_management.repository.IProductRepository;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
 import static com.example.product_management.repository.ConnectionUtil.entityManager;
 
-@Service
+@Repository
 public class ProductRepository implements IProductRepository {
 
     @Override

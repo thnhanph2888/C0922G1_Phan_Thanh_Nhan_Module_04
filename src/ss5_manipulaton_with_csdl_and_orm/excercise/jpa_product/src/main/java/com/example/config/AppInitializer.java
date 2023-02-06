@@ -1,6 +1,5 @@
-package com.example.product_management_jpa.config;
+package com.example.config;
 
-import com.example.product_management_jpa.config.AppConfiguration;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class AppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {

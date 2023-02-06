@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>View</title>
+</head>
+<body>
+<h1>Detail</h1>
+<form th:object="${product}" novalidate="novalidate">
+  <table>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Description</th>
+      <th>Producer</th>
+    </tr>
+    <tr>
+      <td>
+        <input readonly th:field="*{id}">
+      </td>
+      <td>
+        <input readonly th:field="*{name}" >
+      </td>
+      <td>
+        <input readonly th:field="*{price}" >
+      </td>
+      <td>
+        <input readonly th:field="*{description}" >
+      </td>
+      <td>
+        <input readonly th:field="*{producer}">
+      </td>
+    </tr>
+  </table>
+</form>
+</body>
+</html>

@@ -22,7 +22,6 @@ tasks.withType(JavaCompile) {
 }
 
 dependencies {
-
     implementation group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
     implementation group: 'org.springframework', name: 'spring-core', version: '4.3.17.RELEASE'
     implementation group: 'org.springframework', name: 'spring-context', version: '4.3.17.RELEASE'
