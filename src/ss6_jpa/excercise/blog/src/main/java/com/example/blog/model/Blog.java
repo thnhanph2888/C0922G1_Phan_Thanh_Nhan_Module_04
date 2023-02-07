@@ -1,5 +1,4 @@
 package com.example.blog.model;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,13 +11,12 @@ public class Blog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-    private Date date;
+    private String date;
     private String content;
-
     public Blog() {
     }
 
-    public Blog(int id, String name, Date date, String content) {
+    public Blog(int id, String name, String date, String content) {
         this.id = id;
         this.name = name;
         this.date = date;
@@ -41,11 +39,11 @@ public class Blog {
         this.name = name;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
