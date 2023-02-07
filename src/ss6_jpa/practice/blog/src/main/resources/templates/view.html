@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail</title>
+</head>
+<body>
+<h1>Detail</h1>
+<table th:object="${blog}">
+    <tr>
+        <td>Name</td>
+        <td><input th:field="*{name}"/></td>
+    </tr>
+    <tr>
+        <td>Date</td>
+        <td><input th:field="*{date}"/></td>
+    </tr>
+    <tr>
+        <td>
+            Content
+        </td>
+        <td>
+            <textarea th:field="*{content}"></textarea>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

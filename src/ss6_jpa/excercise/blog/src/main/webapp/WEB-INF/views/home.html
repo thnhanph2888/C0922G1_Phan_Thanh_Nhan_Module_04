@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog</title>
+    <style>
+        th {
+            color: white;
+            background-color: green;
+            border: 1px solid green;
+            padding: 10px;
+        }
+
+        td {
+            border-radius: 4px;
+            border: 1px solid green;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+<h1>Blog</h1>
+<table>
+    <tr>
+        <td>STT</td>
+        <td>Name</td>
+        <td>Date</td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr th:each="blog, state : ${blogs}" >
+        <td th:text="${state.count}"></td>
+        <td th:text="${blog.getName()}"></td>
+        <td th:text="${blog.getDate()}"></td>
+        <td>
+            <button><a th:href="@{/view/__${blog.getId()}__}">View</a></button>
+        </td>
+        <td>
+            <button><a th:href="@{/update/__${blog.getId()}__}">Update</a></button>
+        </td>
+        <td>
+            <button><a th:href="@{/delete/__${blog.getId()}__}">Delete</a></button>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

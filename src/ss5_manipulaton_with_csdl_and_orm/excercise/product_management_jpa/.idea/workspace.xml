@@ -10,34 +10,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="25a34c31-aef2-43fc-8fe9-aee44cce5607" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../jpa_product/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../jpa_product/src/main/java/com/example/config/AppConfiguration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../jpa_product/src/main/java/com/example/config/AppInitializer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../jpa_product/src/main/java/com/example/controller/ProductController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../jpa_product/src/main/java/com/example/model/Product.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../jpa_product/src/main/java/com/example/repository/IProductRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../jpa_product/src/main/java/com/example/repository/impl/ProductRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../jpa_product/src/main/java/com/example/service/IProductService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../jpa_product/src/main/java/com/example/service/impl/ProductService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../jpa_product/src/main/webapp/WEB-INF/views/add.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../jpa_product/src/main/webapp/WEB-INF/views/home.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../jpa_product/src/main/webapp/WEB-INF/views/update.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../jpa_product/src/main/webapp/WEB-INF/views/view.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../product_management_hibernate/src/main/java/com/example/product_management/repository/impl/ProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../product_management_hibernate/src/main/java/com/example/product_management/repository/impl/ProductRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../product_management_hibernate/src/main/java/com/example/product_management/service/impl/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../product_management_hibernate/src/main/java/com/example/product_management/service/impl/ProductService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jpa-buddy.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/product_management_jpa/config/AppConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/product_management_jpa/config/AppConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/product_management_jpa/config/AppInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/product_management_jpa/config/AppInitializer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/product_management_jpa/repository/ConnectionUtil.java" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../ss6_jpa/excercise/blog/src/main/java/com/example/blog/config/AppConfiguration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../ss6_jpa/excercise/blog/src/main/java/com/example/blog/config/AppInitializer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../ss6_jpa/excercise/blog/src/main/java/com/example/blog/controller/BlogController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../ss6_jpa/excercise/blog/src/main/java/com/example/blog/model/Blog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../ss6_jpa/excercise/blog/src/main/java/com/example/blog/repository/IBlogRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../ss6_jpa/excercise/blog/src/main/java/com/example/blog/repository/impl/BlogRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../ss6_jpa/excercise/blog/src/main/java/com/example/blog/service/IBlogService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../ss6_jpa/excercise/blog/src/main/java/com/example/blog/service/impl/BlogService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../ss6_jpa/excercise/blog/src/main/webapp/WEB-INF/views/home.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../ss6_jpa/excercise/blog/src/main/webapp/WEB-INF/views/update.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../ss6_jpa/excercise/blog/src/main/webapp/WEB-INF/views/view.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/product_management_jpa/repository/impl/ProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/product_management_jpa/repository/impl/ProductRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/product_management_jpa/service/impl/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/product_management_jpa/service/impl/ProductService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,7 +90,7 @@
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;aa066f6e4a11b6ad68525485d6de7a44&quot;
+    &quot;spring.configuration.checksum&quot;: &quot;77ea48df151b6b287ceba93f88f72a32&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -157,20 +143,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="product_management_jpa" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="product_management_jpa" />
-      <option name="filePath" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="jpa" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.703" ALTERNATIVE_JRE_ENABLED="false">
+    <configuration name="jpa" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.70" ALTERNATIVE_JRE_ENABLED="false">
       <option name="UPDATING_POLICY" value="restart-server" />
       <deployment>
         <artifact name="Gradle : com.example : product_management_jpa-1.0-SNAPSHOT.war (exploded)">
@@ -282,6 +255,11 @@
       <workItem from="1675673426783" duration="1979000" />
       <workItem from="1675675422294" duration="138000" />
       <workItem from="1675676062966" duration="710000" />
+      <workItem from="1675695001323" duration="129000" />
+      <workItem from="1675740511924" duration="179000" />
+      <workItem from="1675743456972" duration="1519000" />
+      <workItem from="1675751751323" duration="546000" />
+      <workItem from="1675756586211" duration="494000" />
     </task>
     <servers />
   </component>

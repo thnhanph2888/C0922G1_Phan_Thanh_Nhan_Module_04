@@ -2,7 +2,6 @@ package com.example.product_management_jpa.repository.impl;
 import com.example.product_management_jpa.model.Product;
 import com.example.product_management_jpa.repository.IProductRepository;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -21,7 +20,7 @@ public class ProductRepository implements IProductRepository {
         return productList;
     }
 
-//    @Transactional
+    @Transactional
     @Override
     public boolean add(Product product) {
         try {
@@ -31,7 +30,7 @@ public class ProductRepository implements IProductRepository {
         }
         return true;
     }
-//    @Transactional
+    @Transactional
     @Override
     public boolean update(Product product) {
         try {
@@ -46,7 +45,7 @@ public class ProductRepository implements IProductRepository {
         }
         return true;
     }
-//    @Transactional
+    @Transactional
     @Override
     public boolean delete(int id) {
         try {
@@ -62,7 +61,6 @@ public class ProductRepository implements IProductRepository {
     public Product findById(int id) {
         return entityManager.find(Product.class, id);
     }
-
     @Override
     public List<Product> findByName(String name) {
         List<Product> productList = findAll();
