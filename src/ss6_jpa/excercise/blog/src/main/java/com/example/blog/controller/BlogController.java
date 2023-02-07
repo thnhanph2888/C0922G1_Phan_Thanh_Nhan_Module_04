@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -39,9 +40,9 @@ public class BlogController {
         return "update";
     }
 
-    @GetMapping("/delete/{id}")
-    public String delete(@PathVariable int id, RedirectAttributes redirectAttributes) {
-        blogService.delete(id);
+    @PostMapping("/delete")
+    public String delete(@RequestParam int idDelete, RedirectAttributes redirectAttributes) {
+        blogService.delete(idDelete);
         redirectAttributes.addFlashAttribute("mess", "delete success!");
         return "redirect:/";
     }
