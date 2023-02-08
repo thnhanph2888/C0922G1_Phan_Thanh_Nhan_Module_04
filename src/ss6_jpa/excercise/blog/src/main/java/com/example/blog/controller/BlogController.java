@@ -1,8 +1,11 @@
 package com.example.blog.controller;
-
 import com.example.blog.model.Blog;
 import com.example.blog.service.IBlogService;
+import com.example.blog.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,28 +19,33 @@ public class BlogController {
 
     @Autowired
     private  IBlogService blogService;
+    @Autowired
+    private ICategoryService categoryService;
     @GetMapping("/")
-    public String showHome(Model model) {
-        model.addAttribute("blogs", blogService.findAll());
-        return "home";
+    public String showHome(@RequestParam(required = false, defaultValue = "") String nameSearch, Model model
+            , @PageableDefault(size = 2, page = 0, sort = "date", direction = Sort.Direction.DESC) Pageable pageable) {
+        model.addAttribute("blogs", blogService.findByName(nameSearch, pageable));
+        return "blog/home";
     }
 
     @GetMapping("/showAdd")
     public String showAdd(Model model) {
+        model.addAttribute("categoryList", categoryService.findAll());
         model.addAttribute("blog", new Blog());
-        return "add";
+        return "blog/add";
     }
 
     @GetMapping("/detail/{id}")
     public String showDetail(Model model, @PathVariable int id) {
         model.addAttribute("blog", blogService.findById(id));
-        return "view";
+        return "blog/view";
     }
 
     @GetMapping("/showUpdate/{id}")
     public String showUpdate(Model model, @PathVariable int id) {
+        model.addAttribute("categoryList", categoryService.findAll());
         model.addAttribute("blog", blogService.findById(id));
-        return "update";
+        return "blog/update";
     }
 
     @PostMapping("/delete")
@@ -54,4 +62,17 @@ public class BlogController {
         return "redirect:/";
     }
 
+    @GetMapping("/view/{id}")
+    public String viewCategory(@PathVariable int id, Model model) {
+        model.addAttribute("blogs", categoryService.findById(id).getBlogSet());
+        return "blog/home";
+    }
+
+    @GetMapping("/search")
+    public String searchByName(@RequestParam String nameSearch, Model model
+            , @PageableDefault(size = 2, page = 0, sort = "name", direction = Sort.Direction.DESC) Pageable pageable) {
+        model.addAttribute("blogs", blogService.findByName(nameSearch, pageable));
+        model.addAttribute("nameSearch", nameSearch);
+        return "blog/home";
+    }
 }

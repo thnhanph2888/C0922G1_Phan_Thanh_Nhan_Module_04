@@ -7,18 +7,20 @@
         th {
             color: white;
             background-color: green;
-            border: 1px solid green;
             padding: 10px;
         }
 
         td {
             border-radius: 4px;
-            border: 1px solid green;
             padding: 10px;
         }
 
         button {
             background-color: green;
+        }
+
+        table{
+            border: 2px solid green;
         }
 
         .a {
@@ -35,21 +37,59 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
-
+<div >
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Blogs</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/category/list">Category</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            More
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="d-flex" action="/search" method="get">
+                    <input name="nameSearch" th:value="${nameSearch}" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+</div>
 <h1>Blog</h1>
-<h th:text="${mess}"></h>
+<h1 th:text="${mess}"></h1>
 <button>
     <a class="a" th:href="@{/showAdd}">add</a>
 </button>
-
 <table>
     <tr>
         <th>Name</th>
         <th>Date create</th>
+        <th>Category</th>
+        <th></th>
+        <th></th>
+        <th></th>
     </tr>
     <tr th:each="blog, state : ${blogs}">
         <td th:text="${blog.getName()}"></td>
         <td th:text="${blog.getDate()}"></td>
+        <td th:text="${blog.getCategory().getName()}"></td>
         <td>
             <button>
                 <a class="a" th:href="@{/detail/__${blog.getId()}__}">view</a>
@@ -60,20 +100,19 @@
                 <a class="a" th:href="@{/showUpdate/__${blog.getId()}__}">update</a>
             </button>
         </td>
-
         <td>
             <button th:attr="onclick=|setInfoDelete('${blog.getId()}','${blog.getName()}')|" type="button"
-                      class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
-            Delete
-        </button>
-<!--            <button th:onclick="|setInfoDelete('${blog.getId()}','${blog.getName()}')|" type="button"-->
-<!--                    class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteModal">-->
-<!--                Delete-->
-<!--            </button>-->
+                    class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                Delete
+            </button>
         </td>
     </tr>
 </table>
-
+<div>
+    <a th:href="@{/search(page=${blogs.number - 1},nameSearch=${nameSearch})}" th:if="${blogs.hasPrevious()}">Previous</a>
+    <span th:text="${blogs.number + 1} "></span>/<span th:text="${blogs.totalPages}"></span>
+    <a th:href="@{/search(page=${blogs.number + 1}, nameSearch=${nameSearch})}" th:if="${blogs.hasNext()}">Next</a>
+</div>
 
 <!-- Modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -97,7 +136,7 @@
         </div>
     </div>
 </div>
-</div>
+
 </body>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
         integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
