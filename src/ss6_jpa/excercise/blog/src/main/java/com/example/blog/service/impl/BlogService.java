@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import java.util.List;
 
 @Service
 public class BlogService implements IBlogService {
@@ -36,5 +35,10 @@ public class BlogService implements IBlogService {
     @Override
     public Page<Blog> findByName(String name, Pageable pageable) {
         return blogRepository.findByNameContaining(name, pageable);
+    }
+
+    @Override
+    public Page<Blog> findBlogByCategory_Id(int id, Pageable pageable) {
+        return blogRepository.findBlogByCategory_Id(id, pageable);
     }
 }

@@ -41,7 +41,7 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
-<div th:replace="layout.html :: hearder"></div>
+<div th:replace="~{layout :: header}"></div>
 <h1>List CateGory</h1>
 <button>
   <a th:href="@{/category/showAdd}">Add</a>

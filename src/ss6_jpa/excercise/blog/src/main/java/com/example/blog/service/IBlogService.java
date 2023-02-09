@@ -13,4 +13,6 @@ public interface IBlogService {
     void addOrUpdate(Blog blog);
     void delete(int id);
     Page<Blog> findByName(String name, Pageable pageable);
+
+    Page<Blog> findBlogByCategory_Id(int id, Pageable pageable);
 }

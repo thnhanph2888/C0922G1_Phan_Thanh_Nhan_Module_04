@@ -63,14 +63,15 @@ public class BlogController {
     }
 
     @GetMapping("/view/{id}")
-    public String viewCategory(@PathVariable int id, Model model) {
-        model.addAttribute("blogs", categoryService.findById(id).getBlogSet());
+    public String viewCategory(@PathVariable int id, Model model
+            , @PageableDefault(size = 2, page = 0, sort = "date", direction = Sort.Direction.DESC) Pageable pageable) {
+        model.addAttribute("blogs", blogService.findBlogByCategory_Id(id, pageable));
         return "blog/home";
     }
 
     @GetMapping("/search")
     public String searchByName(@RequestParam String nameSearch, Model model
-            , @PageableDefault(size = 2, page = 0, sort = "name", direction = Sort.Direction.DESC) Pageable pageable) {
+            , @PageableDefault(size = 2, page = 0, sort = "date", direction = Sort.Direction.DESC) Pageable pageable) {
         model.addAttribute("blogs", blogService.findByName(nameSearch, pageable));
         model.addAttribute("nameSearch", nameSearch);
         return "blog/home";
