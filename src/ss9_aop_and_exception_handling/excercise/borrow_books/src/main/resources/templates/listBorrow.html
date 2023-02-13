@@ -1,0 +1,24 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ListBorrow</title>
+</head>
+<body>
+<h1>List Code Borrow</h1>
+<table>
+  <tr>
+    <td>Name</td>
+    <td>Code</td>
+  </tr>
+  <tr th:each="borrowedBook : ${borrowedBooks}">
+    <td th:text="${borrowedBook.getBook().getName()}"></td>
+    <td th:text="${borrowedBook.getCode()}"></td>
+  </tr>
+</table>
+<form method="post" action="/pay">
+    <input name="code" placeholder="enter code..">
+    <button>Pay</button>
+</form>
+</body>
+</html>
