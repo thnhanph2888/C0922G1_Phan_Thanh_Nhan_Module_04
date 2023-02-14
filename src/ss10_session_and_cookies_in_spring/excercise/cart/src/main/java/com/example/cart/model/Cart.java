@@ -42,7 +42,15 @@ public class Cart {
             Map.Entry<Product, Integer> itemEntry = selectItemInCart(product);
             Integer newQuantity = itemEntry.getValue() + 1;
             products.replace(itemEntry.getKey(),newQuantity);
+            System.out.println(products.entrySet());
         }
+    }
+    public void deleteAllProduct(Product product){
+        if (!checkItemInCart(product)) {
+            return;
+        }
+        Map.Entry<Product, Integer> itemEntry = selectItemInCart(product);
+        products.remove(itemEntry.getKey());
     }
     public void deleteProduct(Product product){
         if (!checkItemInCart(product)){
@@ -51,6 +59,7 @@ public class Cart {
             Map.Entry<Product, Integer> itemEntry = selectItemInCart(product);
             Integer newQuantity = itemEntry.getValue() - 1;
             products.replace(itemEntry.getKey(),newQuantity);
+            System.out.println(products.entrySet().toArray());
         }
     }
 

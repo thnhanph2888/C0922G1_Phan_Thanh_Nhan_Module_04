@@ -11,31 +11,13 @@
 </head>
 <body>
 <h1>Your cart</h1>
-<form th:action="@{/shop}" th:object="${cart}" method="post">
-    <h3>Total Items: <span th:text="${cart.countItemQuantity()}"></span></h3>
-    <h3>Total Products: <span th:text="${cart.countProductQuantity()}"></span></h3>
-    <table class="table table-striped">
-        <tr>
-            <th>Item</th>
-            <th>Quantity</th>
-            <th>Price</th>
-        </tr>
-        <tr th:each="product: ${cart.products}">
-            <td th:text="${product.getKey().name}"></td>
-            <td>
-            </td>
-            <td th:text="${product.getKey().price}"></td>
-        </tr>
-        <tr>
-            <td>Total</td>
-            <td></td>
-            <td th:text="${cart.countTotalPayment()}"></td>
-        </tr>
-    </table>
 
     <div th:each="product : ${cart.products}">
         <div class="border border-primary row">
             <div class="col-sm-1 mb-3 mb-sm-0">
+                <button class="position-absolute btn btn-danger">
+                    <a class="text-decoration-none text-white" th:href="@{/delete/__${product.getKey().getId()}__(action='remove')}">x</a>
+                </button>
                 <img width="100%" height="100px" th:src="${product.getKey().getImage()}"
                      alt="...">
             </div>
@@ -63,9 +45,10 @@
                 </table>
             </div>
         </div>
-        </a>
     </div>
-</form>
+    <span>Tổng tiền: </span>
+    <span th:text="${cart.countTotalPayment()}"></span>
+
 </body>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
         integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
