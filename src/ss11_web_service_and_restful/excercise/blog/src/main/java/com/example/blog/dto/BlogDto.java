@@ -5,7 +5,7 @@ import javax.validation.constraints.NotBlank;
 
 public class BlogDto {
     private int id;
-    @NotBlank(message = "ai cho bạn để trống")
+    @NotBlank(message = "tên không thể để trống")
     private String name;
     private String date;
     private String author;

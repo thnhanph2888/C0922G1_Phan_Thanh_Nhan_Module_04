@@ -45,9 +45,9 @@ public class BlogRestController {
         }
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Set<Blog>> findBlogByCategory(@PathVariable int id) {
-        Set<Blog> blogList = categoryService.findById(id).getBlogSet();
+    @GetMapping("/{idCategory}")
+    public ResponseEntity<Set<Blog>> findBlogByCategory(@PathVariable int idCategory) {
+        Set<Blog> blogList = categoryService.findById(idCategory).getBlogSet();
         if (blogList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
