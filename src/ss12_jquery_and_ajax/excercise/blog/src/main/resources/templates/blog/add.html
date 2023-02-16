@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add</title>
+</head>
+<body>
+<h1>Add</h1>
+<form th:action="@{/add}" method="post">
+    <table th:object="${blogDto}">
+        <tr>
+            <td>
+                <input hidden th:field="*{id}">
+            </td>
+        </tr>
+        <tr>
+            <td>Category</td>
+            <td>
+                <select th:field="*{category}">
+                    <option th:each="category : ${categoryList}" th:text="${category.getName()}"
+                            th:value="${category.getId()}"></option>
+                </select>
+                <a th:href="@{/category/add}"></a>
+            </td>
+        </tr>
+        <tr>
+            <td>Name</td>
+            <td><input th:field="*{name}"/></td>
+        </tr>
+        <tr>
+            <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></td>
+        </tr>
+        <tr>
+            <td>Date</td>
+            <td><input type="date" th:field="*{date}"/></td>
+        </tr>
+        <tr>
+            <td th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></td>
+        </tr>
+        <tr>
+            <td>Author</td>
+            <td><input th:field="*{author}"/></td>
+        </tr>
+        <tr>
+            <td th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></td>
+        </tr>
+        <tr>
+            <td>
+                Content
+            </td>
+            <td>
+                <textarea th:field="*{content}"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></td>
+        </tr>
+        <tr>
+            <td>
+                <button>Add</button>
+            </td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
