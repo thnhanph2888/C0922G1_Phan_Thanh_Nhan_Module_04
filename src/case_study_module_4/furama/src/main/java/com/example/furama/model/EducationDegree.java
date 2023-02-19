@@ -7,25 +7,18 @@ import java.util.Set;
 public class EducationDegree {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private int id;
     private String name;
     @OneToMany(mappedBy = "educationDegree", cascade = CascadeType.REMOVE)
     private Set<Employee> employeeSet;
 
     public EducationDegree() {
     }
-
-    public EducationDegree(String id, String name, Set<Employee> employeeSet) {
-        this.id = id;
-        this.name = name;
-        this.employeeSet = employeeSet;
-    }
-
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

@@ -1,30 +1,28 @@
 package com.example.furama.model;
 
+import org.springframework.lang.NonNull;
+
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 public class Role {
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     private String name;
+    @NonNull
     @ManyToMany(mappedBy = "roleSet")
     private Set<User> userSet;
 
     public Role() {
     }
 
-    public Role(String id, String name, Set<User> userSet) {
-        this.id = id;
-        this.name = name;
-        this.userSet = userSet;
-    }
-
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

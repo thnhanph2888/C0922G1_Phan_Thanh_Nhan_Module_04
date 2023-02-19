@@ -1,5 +1,7 @@
 package com.example.furama.model;
 
+import org.springframework.lang.NonNull;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -7,23 +9,28 @@ import java.util.Set;
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private int id;
     private String name;
-    private String date_of_birth;
+    private String dayOfBirth;
     private String id_card;
-    private String phone;
+    private String phoneNumber;
     private String email;
+    private String address;
+    @NonNull
     @ManyToOne
     @JoinColumn(name = "division_id", referencedColumnName = "id")
     private Division division;
+    @NonNull
     @ManyToOne
     @JoinColumn(name = "position_id", referencedColumnName = "id")
     private Position position;
+    @NonNull
     @ManyToOne
     @JoinColumn(name = "educationDegree_id", referencedColumnName = "id")
     private EducationDegree educationDegree;
+    @NonNull
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn(name = "user_id", referencedColumnName = "username")
     private User user;
     @OneToMany(mappedBy = "employee", cascade = CascadeType.REMOVE)
     private Set<Contract> contractSet;
@@ -32,26 +39,35 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(String id, String name, String date_of_birth, String id_card, String phone, String email, Division division, Position position, EducationDegree educationDegree, User user, Set<Contract> contractSet, double salary) {
-        this.id = id;
-        this.name = name;
-        this.date_of_birth = date_of_birth;
-        this.id_card = id_card;
-        this.phone = phone;
-        this.email = email;
-        this.division = division;
-        this.position = position;
-        this.educationDegree = educationDegree;
-        this.user = user;
-        this.contractSet = contractSet;
-        this.salary = salary;
+    public String getDayOfBirth() {
+        return dayOfBirth;
     }
 
-    public String getId() {
+    public void setDayOfBirth(String dayOfBirth) {
+        this.dayOfBirth = dayOfBirth;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -64,11 +80,11 @@ public class Employee {
     }
 
     public String getDate_of_birth() {
-        return date_of_birth;
+        return dayOfBirth;
     }
 
     public void setDate_of_birth(String date_of_birth) {
-        this.date_of_birth = date_of_birth;
+        this.dayOfBirth = date_of_birth;
     }
 
     public String getId_card() {
@@ -80,11 +96,11 @@ public class Employee {
     }
 
     public String getPhone() {
-        return phone;
+        return phoneNumber;
     }
 
     public void setPhone(String phone) {
-        this.phone = phone;
+        this.phoneNumber = phone;
     }
 
     public String getEmail() {

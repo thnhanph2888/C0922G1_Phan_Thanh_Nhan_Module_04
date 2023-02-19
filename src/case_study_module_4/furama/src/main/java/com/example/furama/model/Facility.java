@@ -1,5 +1,7 @@
 package com.example.furama.model;
 
+import org.springframework.lang.NonNull;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -7,7 +9,7 @@ import java.util.Set;
 public class Facility {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private int id;
     private String name;
     private String area;
     private String cost;
@@ -17,9 +19,11 @@ public class Facility {
     private String poolArea;
     private String numberOfFloors;
     private String facilityFree;
+    @NonNull
     @ManyToOne
     @JoinColumn(name = "facility_type_id", referencedColumnName = "id")
     private FacilityType facilityType;
+    @NonNull
     @ManyToOne
     @JoinColumn(name = "rent_type_id", referencedColumnName = "id")
     private RentType rentType;
@@ -30,27 +34,11 @@ public class Facility {
     public Facility() {
     }
 
-    public Facility(String id, String name, String area, String cost, String maxPeople, String standardRoom, String descriptionOtherConvenience, String poolArea, String numberOfFloors, String facilityFree, FacilityType facilityType, RentType rentType, Set<Contract> contractSet) {
-        this.id = id;
-        this.name = name;
-        this.area = area;
-        this.cost = cost;
-        this.maxPeople = maxPeople;
-        this.standardRoom = standardRoom;
-        this.descriptionOtherConvenience = descriptionOtherConvenience;
-        this.poolArea = poolArea;
-        this.numberOfFloors = numberOfFloors;
-        this.facilityFree = facilityFree;
-        this.facilityType = facilityType;
-        this.rentType = rentType;
-        this.contractSet = contractSet;
-    }
-
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

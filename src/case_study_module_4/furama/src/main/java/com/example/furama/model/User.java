@@ -1,15 +1,20 @@
 package com.example.furama.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.lang.NonNull;
+
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 public class User {
     @Id
-    private String userName;
+    private String username;
+    @JsonIgnore
     private String password;
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private Set<Employee> employeeSet;
+    @NonNull
     @ManyToMany
     @JoinTable(name = "user_role"
             , joinColumns = @JoinColumn(name = "username")
@@ -18,20 +23,12 @@ public class User {
 
     public User() {
     }
-
-    public User(String userName, String password, Set<Employee> employeeSet, Set<Role> roleSet) {
-        this.userName = userName;
-        this.password = password;
-        this.employeeSet = employeeSet;
-        this.roleSet = roleSet;
-    }
-
     public String getUserName() {
-        return userName;
+        return username;
     }
 
     public void setUserName(String userName) {
-        this.userName = userName;
+        this.username = userName;
     }
 
     public String getPassword() {

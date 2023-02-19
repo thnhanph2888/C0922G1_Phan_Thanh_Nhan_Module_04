@@ -1,5 +1,7 @@
 package com.example.furama.model;
 
+import org.springframework.lang.NonNull;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
@@ -8,10 +10,12 @@ import java.util.Set;
 public class Contract {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private int id;
+    @NonNull
     @ManyToOne
     @JoinColumn(name = "facility_id", referencedColumnName = "id")
     private Facility facility;
+    @NonNull
     @ManyToOne
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
@@ -19,6 +23,7 @@ public class Contract {
     private String endDate;
     private String deposit;
     private String totalMoney;
+    @NonNull
     @ManyToMany
     @JoinTable(name = "contract_detail"
             , joinColumns = @JoinColumn(name = "contract_id")
@@ -26,6 +31,7 @@ public class Contract {
     private Set<AttachFacility> attachFacilitySet;
     private String nameFacility;
     private String nameCustomer;
+    @NonNull
     @ManyToOne
     @JoinColumn(name = "employee_id", referencedColumnName = "id")
     private Employee employee;
@@ -33,25 +39,12 @@ public class Contract {
     public Contract() {
     }
 
-    public Contract(String id, Facility facility, Customer customer, String startDate, String endDate, String deposit, String totalMoney, Set<AttachFacility> attachFacilitySet, String nameFacility, String nameCustomer, Employee employee) {
-        this.id = id;
-        this.facility = facility;
-        this.customer = customer;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.deposit = deposit;
-        this.totalMoney = totalMoney;
-        this.attachFacilitySet = attachFacilitySet;
-        this.nameFacility = nameFacility;
-        this.nameCustomer = nameCustomer;
-        this.employee = employee;
-    }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

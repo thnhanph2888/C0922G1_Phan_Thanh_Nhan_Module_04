@@ -7,7 +7,7 @@ import java.util.Set;
 public class Position {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private int id;
     private String name;
     @OneToMany(mappedBy = "position", cascade = CascadeType.REMOVE)
     private Set<Employee> employeeSet;
@@ -15,17 +15,11 @@ public class Position {
     public Position() {
     }
 
-    public Position(String id, String name, Set<Employee> employeeSet) {
-        this.id = id;
-        this.name = name;
-        this.employeeSet = employeeSet;
-    }
-
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

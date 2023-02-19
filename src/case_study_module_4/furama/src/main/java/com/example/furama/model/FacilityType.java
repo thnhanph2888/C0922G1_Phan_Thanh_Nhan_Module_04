@@ -7,7 +7,7 @@ import java.util.Set;
 public class FacilityType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private int id;
     private String name;
     @OneToMany(mappedBy = "facilityType", cascade = CascadeType.REMOVE)
     private Set<Facility> facilitySet;
@@ -15,17 +15,11 @@ public class FacilityType {
     public FacilityType() {
     }
 
-    public FacilityType(String id, String name, Set<Facility> facilitySet) {
-        this.id = id;
-        this.name = name;
-        this.facilitySet = facilitySet;
-    }
-
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

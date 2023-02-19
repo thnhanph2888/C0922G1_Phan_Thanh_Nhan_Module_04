@@ -7,30 +7,19 @@ import java.util.Set;
 public class CustomerType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private int id;
     private String name;
     @OneToMany(mappedBy = "customerType", cascade = CascadeType.REMOVE)
     private Set<Customer> customerSet;
 
-    public CustomerType(String id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
     public CustomerType() {
     }
 
-    public CustomerType(String id, String name, Set<Customer> customerSet) {
-        this.id = id;
-        this.name = name;
-        this.customerSet = customerSet;
-    }
-
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

@@ -7,25 +7,47 @@ import java.util.Set;
 public class AttachFacility {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private int id;
+
     private String name;
+    private String unit;
+    private double cost;
+    private String status;
     @ManyToMany(mappedBy = "attachFacilitySet")
     private Set<Contract> contractSet;
 
     public AttachFacility() {
     }
 
-    public AttachFacility(String id, String name, Set<Contract> contractSet) {
-        this.id = id;
-        this.name = name;
-        this.contractSet = contractSet;
+    public String getUnit() {
+        return unit;
     }
 
-    public String getId() {
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public double getCost() {
+        return cost;
+    }
+
+    public void setCost(double cost) {
+        this.cost = cost;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
