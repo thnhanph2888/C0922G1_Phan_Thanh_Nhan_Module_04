@@ -8,6 +8,7 @@ public class EducationDegree {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(nullable = false, length = 100)
     private String name;
     @OneToMany(mappedBy = "educationDegree", cascade = CascadeType.REMOVE)
     private Set<Employee> employeeSet;

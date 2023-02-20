@@ -8,6 +8,7 @@ public class FacilityType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(nullable = false, length = 100)
     private String name;
     @OneToMany(mappedBy = "facilityType", cascade = CascadeType.REMOVE)
     private Set<Facility> facilitySet;

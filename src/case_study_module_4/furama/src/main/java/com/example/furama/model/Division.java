@@ -7,8 +7,8 @@ import java.util.Set;
 @Entity
 public class Division {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(nullable = false, length = 100)
     private String name;
     @OneToMany(mappedBy = "division", cascade = CascadeType.REMOVE)
     private Set<Employee> employeeSet;

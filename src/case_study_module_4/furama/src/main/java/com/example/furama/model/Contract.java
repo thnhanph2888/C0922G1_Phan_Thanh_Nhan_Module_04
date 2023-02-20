@@ -11,34 +11,29 @@ public class Contract {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @NonNull
     @ManyToOne
     @JoinColumn(name = "facility_id", referencedColumnName = "id")
     private Facility facility;
-    @NonNull
     @ManyToOne
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
+    @Column(nullable = false, length = 100)
     private String startDate;
+    @Column(nullable = false, length = 100)
     private String endDate;
+    @Column(nullable = false, length = 100)
     private String deposit;
-    private String totalMoney;
-    @NonNull
-    @ManyToMany
-    @JoinTable(name = "contract_detail"
-            , joinColumns = @JoinColumn(name = "contract_id")
-            , inverseJoinColumns = @JoinColumn(name = "attach_facility_id"))
-    private Set<AttachFacility> attachFacilitySet;
-    private String nameFacility;
-    private String nameCustomer;
-    @NonNull
+    @ManyToOne
+    @JoinColumn(name = "contract_detail_id", referencedColumnName = "id")
+    private ContractDetail contractDetail;
+    @OneToMany(mappedBy = "contract")
+    private Set<ContractDetail> contractDetailSet;
     @ManyToOne
     @JoinColumn(name = "employee_id", referencedColumnName = "id")
     private Employee employee;
 
     public Contract() {
     }
-
 
     public int getId() {
         return id;
@@ -88,36 +83,21 @@ public class Contract {
         this.deposit = deposit;
     }
 
-    public String getTotalMoney() {
-        return totalMoney;
+
+    public ContractDetail getContractDetail() {
+        return contractDetail;
     }
 
-    public void setTotalMoney(String totalMoney) {
-        this.totalMoney = totalMoney;
+    public void setContractDetail(ContractDetail contractDetail) {
+        this.contractDetail = contractDetail;
     }
 
-    public Set<AttachFacility> getAttachFacilitySet() {
-        return attachFacilitySet;
+    public Set<ContractDetail> getContractDetailSet() {
+        return contractDetailSet;
     }
 
-    public void setAttachFacilitySet(Set<AttachFacility> attachFacilitySet) {
-        this.attachFacilitySet = attachFacilitySet;
-    }
-
-    public String getNameFacility() {
-        return nameFacility;
-    }
-
-    public void setNameFacility(String nameFacility) {
-        this.nameFacility = nameFacility;
-    }
-
-    public String getNameCustomer() {
-        return nameCustomer;
-    }
-
-    public void setNameCustomer(String nameCustomer) {
-        this.nameCustomer = nameCustomer;
+    public void setContractDetailSet(Set<ContractDetail> contractDetailSet) {
+        this.contractDetailSet = contractDetailSet;
     }
 
     public Employee getEmployee() {

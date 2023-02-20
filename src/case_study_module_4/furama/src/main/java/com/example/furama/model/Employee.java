@@ -10,13 +10,18 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(nullable = false, length = 100)
     private String name;
+    @Column(nullable = false, length = 100)
     private String dayOfBirth;
+    @Column(nullable = false, length = 100, unique = true)
     private String id_card;
+    @Column(nullable = false, length = 100, unique = true)
     private String phoneNumber;
+    @Column(nullable = false, length = 100, unique = true)
     private String email;
+    @Column(nullable = false, length = 100)
     private String address;
-    @NonNull
     @ManyToOne
     @JoinColumn(name = "division_id", referencedColumnName = "id")
     private Division division;

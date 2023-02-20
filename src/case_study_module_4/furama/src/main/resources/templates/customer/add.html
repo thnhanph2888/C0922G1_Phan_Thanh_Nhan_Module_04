@@ -14,7 +14,7 @@
     <h1>Add New Customer</h1>
 </div>
 <div>
-    <form class="col-md-3 ms-5" action="/customer/save(action=add)" method="post">
+    <form class="col-md-3 ms-5" action="/customer/save" method="post">
         <table class="table" th:object="${customer}">
             <tr>
                 <td>
@@ -36,9 +36,11 @@
                 <td>
                     Giới tính:
                 </td>
-                <td th:field="*{gender}">
-                    <input id="male" type="radio" name="gender_customer" value="1"> <label>Nam</label>
-                    <input id="female" type="radio" name="gender_customer" value="0"> <label>Nữ</label>
+                <td>
+                    <input id="male" th:field="*{gender}" type="radio" name="gender_customer" value="true">
+                    <label>Nam</label>
+                    <input id="female" th:field="*{gender}" type="radio" name="gender_customer" value="false">
+                    <label>Nữ</label>
                 </td>
             </tr>
             <tr>
@@ -46,7 +48,7 @@
                     <label for="id_card_customer">Số CMND: </label>
                 </td>
                 <td>
-                    <input id="id_card_customer" th:field="*{id_card}"
+                    <input id="id_card_customer" th:field="*{idCard}">
                 </td>
             </tr>
             <tr>
@@ -71,6 +73,8 @@
                 </td>
                 <td>
                     <select id="customer_type_id" th:field="*{customerType}">
+                        <option th:each="customerType: ${customerTypes}" th:text="${customerType.getName()}"
+                                th:value="${customerType.getId()}"></option>
                     </select>
                 </td>
             </tr>

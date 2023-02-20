@@ -8,19 +8,31 @@ public class AttachFacility {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
+    @Column(length = 100, nullable = false)
     private String name;
+    @Column(length = 100, nullable = false)
     private String unit;
+    @Column(nullable = false)
     private double cost;
+    @Column(length = 100, nullable = false)
     private String status;
-    @ManyToMany(mappedBy = "attachFacilitySet")
-    private Set<Contract> contractSet;
+    @ManyToOne
+    @JoinColumn(name = "contract_detail_id", referencedColumnName = "id")
+    private ContractDetail contractDetail;
 
     public AttachFacility() {
     }
 
     public String getUnit() {
         return unit;
+    }
+
+    public ContractDetail getContractDetail() {
+        return contractDetail;
+    }
+
+    public void setContractDetail(ContractDetail contractDetail) {
+        this.contractDetail = contractDetail;
     }
 
     public void setUnit(String unit) {
@@ -59,11 +71,4 @@ public class AttachFacility {
         this.name = name;
     }
 
-    public Set<Contract> getContractSet() {
-        return contractSet;
-    }
-
-    public void setContractSet(Set<Contract> contractSet) {
-        this.contractSet = contractSet;
-    }
 }

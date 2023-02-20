@@ -1,36 +1,29 @@
-package com.example.furama.model;
+package com.example.furama.dto;
+
+import com.example.furama.model.Contract;
+import com.example.furama.model.CustomerType;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Set;
 
-@Entity
-public class Customer {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class CustomerDto {
     private int id;
-    @Column(nullable = false, length = 100)
+    @NotBlank(message = "Vui lòng nhập tên!")
     private String name;
-    @Column(nullable = false, length = 100)
     private String dayOfBirth;
-    @Column(nullable = false)
     private Boolean gender;
-    @Column(nullable = false, length = 100, unique = true)
     private String idCard;
-    @Column(nullable = false, length = 100, unique = true)
     private String phoneNumber;
-    @Column(nullable = false, length = 100, unique = true)
     private String email;
-    @Column(nullable = false, length = 100)
     private String address;
-    @ManyToOne
-    @JoinColumn(name = "customer_type_id", referencedColumnName = "id", nullable = false)
+
     private CustomerType customerType;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.REMOVE)
     private Set<Contract> contractSet;
 
-    public Customer() {
+    public CustomerDto() {
     }
 
     public int getId() {
@@ -57,20 +50,20 @@ public class Customer {
         this.dayOfBirth = birthday;
     }
 
-    public Boolean getGender() {
-        return gender;
-    }
-
-    public void setGender(Boolean gender) {
-        this.gender = gender;
-    }
-
     public String getDayOfBirth() {
         return dayOfBirth;
     }
 
     public void setDayOfBirth(String dayOfBirth) {
         this.dayOfBirth = dayOfBirth;
+    }
+
+    public Boolean getGender() {
+        return gender;
+    }
+
+    public void setGender(Boolean gender) {
+        this.gender = gender;
     }
 
     public String getIdCard() {
@@ -122,3 +115,4 @@ public class Customer {
         this.contractSet = contractSet;
     }
 }
+

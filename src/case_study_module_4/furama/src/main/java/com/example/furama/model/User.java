@@ -1,8 +1,6 @@
 package com.example.furama.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.lang.NonNull;
-
 import javax.persistence.*;
 import java.util.Set;
 
@@ -11,10 +9,10 @@ public class User {
     @Id
     private String username;
     @JsonIgnore
+    @Column(nullable = false, length = 100)
     private String password;
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private Set<Employee> employeeSet;
-    @NonNull
     @ManyToMany
     @JoinTable(name = "user_role"
             , joinColumns = @JoinColumn(name = "username")

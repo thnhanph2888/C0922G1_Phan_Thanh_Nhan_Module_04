@@ -10,8 +10,8 @@ public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(nullable = false, length = 100)
     private String name;
-    @NonNull
     @ManyToMany(mappedBy = "roleSet")
     private Set<User> userSet;
 
