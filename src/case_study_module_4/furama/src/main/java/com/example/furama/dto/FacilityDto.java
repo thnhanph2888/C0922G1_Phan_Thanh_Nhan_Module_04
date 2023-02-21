@@ -1,41 +1,27 @@
-package com.example.furama.model;
-import javax.persistence.*;
+package com.example.furama.dto;
+
+import com.example.furama.model.Contract;
+import com.example.furama.model.FacilityType;
+import com.example.furama.model.RentType;
 import java.util.Set;
 
-@Entity
-public class Facility {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    @Column(nullable = false, length = 100)
-    private String name;
-    @Column(nullable = false, length = 100)
-    private int area;
-    @Column(nullable = false, length = 100)
-    private double cost;
-    @Column(nullable = false, length = 100)
-    private int maxPeople;
-    @Column(length = 100)
-    private String standardRoom;
-    @Column(length = 100)
-    private String descriptionOtherConvenience;
-    @Column(length = 100)
-    private double poolArea;
-    @Column(length = 100)
-    private int numberOfFloors;
-    @Column(length = 100)
-    private String facilityFree;
-    @ManyToOne
-    @JoinColumn(name = "facility_type_id", referencedColumnName = "id")
-    private FacilityType facilityType;
-    @ManyToOne
-    @JoinColumn(name = "rent_type_id", referencedColumnName = "id")
-    private RentType rentType;
+public class FacilityDto {
 
-    @OneToMany(mappedBy = "facility", cascade = CascadeType.REMOVE)
+    private int id;
+    private String name;
+    private int area;
+    private double cost;
+    private int maxPeople;
+    private String standardRoom;
+    private String descriptionOtherConvenience;
+    private double poolArea;
+    private int numberOfFloors;
+    private String facilityFree;
+    private FacilityType facilityType;
+    private RentType rentType;
     private Set<Contract> contractSet;
 
-    public Facility() {
+    public FacilityDto() {
     }
 
     public int getId() {
@@ -130,7 +116,7 @@ public class Facility {
         return rentType;
     }
 
-    public void setRentType(RentType rentType) {
+    public void setRentType( RentType rentType) {
         this.rentType = rentType;
     }
 
@@ -142,3 +128,4 @@ public class Facility {
         this.contractSet = contractSet;
     }
 }
+

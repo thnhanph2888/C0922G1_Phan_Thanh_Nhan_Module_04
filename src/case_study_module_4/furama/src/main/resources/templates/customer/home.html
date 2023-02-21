@@ -9,20 +9,25 @@
     <link rel="stylesheet" href="/navbar_table.css">
 </head>
 <body>
-<div id="header">
-    <div id="banner">
-        <img src="">
-        <span>Phan Thành Nhân</span>
+<div th:fragment="header" id="header">
+    <div id="banner" class="row">
+        <div class="col-lg-6">
+            <img id="logo" width="122px" height="122" src="https://cdn.nhanlucnganhluat.vn/uploads/images/051D288B/logo/2018-12/Logo-FURAMA-RESORT.jpg" alt="image">
+        </div>
+        <div class="col-lg-6 text-center">
+                <h5 class="text-white">Phan Thành Nhân</h5>
+                <h6 class="text-white ">C0922G1</h6>
+        </div>
+
     </div>
     <ul id="ul">
         <li><a th:href="@{/customer}">Home</a></li>
         <li><a href="#ds">Employee</a></li>
         <li><a href="#contact">Customer</a></li>
-        <li><a href="#about">Facility</a></li>
+        <li><a th:href="@{/facility}">Facility</a></li>
 
         <li class="liRight">
             <form class="d-flex" role="search" action="/customer" method="get">
-                <input hidden name="action" value="search">
                 <input name="nameSearch" class="form-control me-2" type="search" placeholder="name..">
                 <input name="emailSearch" class="form-control me-2" type="search" placeholder="email..">
                 <select name="customerType">
@@ -30,7 +35,7 @@
                             th:value="${customerType.getId()}"></option>
                     <option value="">All</option>
                 </select>
-                <button class="btn btn-outline-success" type="submit">Search</button>
+                <button class="btn btn-success" type="submit">Search</button>
             </form>
         </li>
     </ul>
@@ -76,23 +81,25 @@
         </td>
     </tr>
 </table>
-<a th:href="@{/customer(page=${customers.number - 1}
-          , action=${action}
+<div class="page-control">
+    <a class="text-decoration-none button" th:href="@{/customer(page=${customers.number - 1}
            , nameSearch=${nameSearch}
            , emailSearch=${emailSearch}
            , customerType=${customerTypeId})}" th:if="${customers.hasPrevious()}">
-    <button>Previous</button>
-</a>
+        Previous
+    </a>
 
-<span th:text="${customers.number + 1} "></span>/<span th:text="${customers.totalPages}"></span>
+    <span th:text="${customers.number + 1} "></span>/<span th:text="${customers.totalPages}"></span>
 
-<a th:href="@{/customer(page=${customers.number + 1}
-          , action=${action}
+    <a class="text-decoration-none button" th:href="@{/customer(page=${customers.number + 1}
            , nameSearch=${nameSearch}
            , emailSearch=${emailSearch}
            , customerType=${customerTypeId})}" th:if="${customers.hasNext()}">
-    <button>Next</button>
-</a>
+        Next
+    </a>
+</div>
+<br>
+<hr>
 
 <!-- Modal Delete -->
 <div class="modal fade" id="delete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -116,8 +123,8 @@
         </div>
     </div>
 </div>
-<div th:insert="footer.html :: footer">
-</div>
+<div th:insert="footer.html :: footer"></div>
+
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
