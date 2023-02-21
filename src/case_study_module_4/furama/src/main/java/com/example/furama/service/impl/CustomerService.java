@@ -1,7 +1,6 @@
 package com.example.furama.service.impl;
 
 import com.example.furama.model.Customer;
-import com.example.furama.model.CustomerType;
 import com.example.furama.repository.ICustomerRepository;
 import com.example.furama.service.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,25 +13,30 @@ public class CustomerService implements ICustomerService {
     @Autowired
     private ICustomerRepository customerRepository;
 
-
     @Override
     public boolean addOrUpdate(Customer customer) {
-        try {
-            customerRepository.save(customer);
-            return true;
-        } catch (Exception e) {
+        if (!(customerRepository.findByIdCardOrPhoneNumberOrEmail(customer.getIdCard()
+         , customer.getPhoneNumber()
+        , customer.getEmail()) == null)) {
+            try {
+                customerRepository.save(customer);
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        } else {
             return false;
         }
     }
 
     @Override
-    public Page<Customer> getList(Pageable pageable) {
-        return customerRepository.findAll(pageable);
+    public Page<Customer> findByNameAndEmail(String nameSearch, String emailSearch, Pageable pageable) {
+        return customerRepository.findByNameContainingAndEmailContaining(nameSearch, emailSearch, pageable);
     }
 
     @Override
-    public Page<Customer> searchByNameAndEmailAndCustomerType(Pageable pageable, String name, String email, String customerTypeId) {
-        return customerRepository.findByNameContainingAndEmailAndCustomerType(pageable, name, email, customerTypeId);
+    public Page<Customer> searchByNameAndEmailAndCustomerType(Pageable pageable, String name, String email, int customerTypeId) {
+        return customerRepository.findByNameContainingAndEmailContainingAndCustomerType_Id(pageable, name, email, customerTypeId);
     }
 
     @Override
@@ -48,5 +52,6 @@ public class CustomerService implements ICustomerService {
     @Override
     public Customer findById(int id) {
         return customerRepository.findById(id).orElse(null);
+
     }
 }

@@ -2,7 +2,6 @@ package com.example.furama.controller;
 
 import com.example.furama.dto.FacilityDto;
 import com.example.furama.model.Facility;
-import com.example.furama.repository.IFacilityTypeRepository;
 import com.example.furama.service.IFacilityService;
 import com.example.furama.service.IFacilityTypeService;
 import com.example.furama.service.IRentTypeService;
@@ -36,13 +35,17 @@ public class FacilityController {
     public String searchByNameAndFacilityType(Model model
             , @RequestParam(value = "page", defaultValue = "0") int page
             , @RequestParam(value = "size", defaultValue = "5") int size
-            , @RequestParam(value = "name", defaultValue = "%%") String nameSearch
-            , @RequestParam(value = "facilityTypeId", defaultValue = "%%") String facilityTypeId) {
+            , @RequestParam(value = "nameSearch", defaultValue = "") String nameSearch
+            , @RequestParam(value = "facilityTypeId", defaultValue = "0") int facilityTypeId) {
         Pageable pageable = PageRequest.of(page, size);
         model.addAttribute("nameSearch", nameSearch);
         model.addAttribute("facilityTypeId", facilityTypeId);
-        model.addAttribute("facilityList",  facilityService.searchByNameAndFacilityType(nameSearch, facilityTypeId, pageable));
-        return "facility/list";
+        if (facilityTypeId == 0) {
+            model.addAttribute("facilityList",  facilityService.searchByName(nameSearch, pageable));
+        } else {
+            model.addAttribute("facilityList",  facilityService.searchByNameAndFacilityType(nameSearch, facilityTypeId, pageable));
+        }
+        return "facility/list_facility";
     }
 
     @GetMapping("showAdd")
@@ -59,6 +62,16 @@ public class FacilityController {
             redirectAttributes.addFlashAttribute("message", "success!");
         } else {
             redirectAttributes.addFlashAttribute("message", "failed!");
+        }
+        return "redirect:/facility";
+    }
+
+    @PostMapping("/delete")
+    public String deleteById(RedirectAttributes redirectAttributes,@RequestParam("idDelete") int idDelete) {
+        if (facilityService.deleteById(idDelete)) {
+            redirectAttributes.addFlashAttribute("message", "Delete success!");
+        } else {
+            redirectAttributes.addFlashAttribute("message", "Delete failed!");
         }
         return "redirect:/facility";
     }

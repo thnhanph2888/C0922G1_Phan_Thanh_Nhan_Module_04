@@ -6,8 +6,10 @@ import org.springframework.data.domain.Pageable;
 
 public interface ICustomerService {
     boolean addOrUpdate(Customer customer);
-    Page<Customer> getList(Pageable pageable);
-    Page<Customer> searchByNameAndEmailAndCustomerType(Pageable pageable, String name, String email, String customerTypeId);
+    Page<Customer> findByNameAndEmail(String nameSearch, String emailSearch, Pageable pageable);
+    Page<Customer> searchByNameAndEmailAndCustomerType(Pageable pageable, String name, String email, int customerTypeId);
     Boolean delete(int idDelete);
     Customer findById(int id);
+
+
 }

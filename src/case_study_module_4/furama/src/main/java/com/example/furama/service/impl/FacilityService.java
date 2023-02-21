@@ -1,5 +1,4 @@
 package com.example.furama.service.impl;
-
 import com.example.furama.model.Facility;
 import com.example.furama.repository.IFacilityRepository;
 import com.example.furama.service.IFacilityService;
@@ -13,15 +12,31 @@ public class FacilityService implements IFacilityService {
 
     @Autowired
     private IFacilityRepository facilityRepository;
+
     @Override
-    public Page<Facility> searchByNameAndFacilityType(String name, String facilityTypeId, Pageable pageable) {
-        return facilityRepository.searchByNameAndFacilityType(name, facilityTypeId, pageable);
+    public Page<Facility> searchByName(String name, Pageable pageable) {
+        return facilityRepository.findByNameContaining(name, pageable);
+    }
+
+    @Override
+    public Page<Facility> searchByNameAndFacilityType(String name, int facilityTypeId, Pageable pageable) {
+        return facilityRepository.findByNameContainingAndFacilityType_Id(name, facilityTypeId, pageable);
     }
 
     @Override
     public boolean addOrUpdate(Facility facility) {
         try {
             facilityRepository.save(facility);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean deleteById(int idDelete) {
+        try {
+            facilityRepository.deleteById(idDelete);
             return true;
         } catch (Exception e) {
             return false;

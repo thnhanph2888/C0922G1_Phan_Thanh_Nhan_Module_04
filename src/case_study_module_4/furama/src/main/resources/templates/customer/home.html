@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="/navbar_table.css">
 </head>
 <body>
-<div th:fragment="header" id="header">
-    <div id="banner" class="row">
+<div id="header">
+    <div th:fragment="banner"  id="banner" class="row">
         <div class="col-lg-6">
             <img id="logo" width="122px" height="122" src="https://cdn.nhanlucnganhluat.vn/uploads/images/051D288B/logo/2018-12/Logo-FURAMA-RESORT.jpg" alt="image">
         </div>
@@ -18,7 +18,6 @@
                 <h5 class="text-white">Phan Thành Nhân</h5>
                 <h6 class="text-white ">C0922G1</h6>
         </div>
-
     </div>
     <ul id="ul">
         <li><a th:href="@{/customer}">Home</a></li>
@@ -28,9 +27,10 @@
 
         <li class="liRight">
             <form class="d-flex" role="search" action="/customer" method="get">
+                <input name="action" value="search" hidden>
                 <input name="nameSearch" class="form-control me-2" type="search" placeholder="name..">
                 <input name="emailSearch" class="form-control me-2" type="search" placeholder="email..">
-                <select name="customerType">
+                <select name="customerTypeId">
                     <option th:each="customerType : ${customerTypes}" th:text="${customerType.getName()}"
                             th:value="${customerType.getId()}"></option>
                     <option value="">All</option>
@@ -40,7 +40,14 @@
         </li>
     </ul>
 </div>
-<h1><a class="btn btn-success" href="/customer/showAdd">add</a></h1>
+
+<div class="row">
+    <div class="col-lg-2">
+        <a class="btn btn-success" href="/customer/showAdd">add</a>
+    </div>
+
+    <p class="col-lg-6" th:text="${message}"></p>
+</div>
 <table id="table">
     <tr>
         <th>Name</th>
@@ -51,7 +58,7 @@
         <th>Phone Number</th>
         <th>Email</th>
         <th>Address</th>
-        <th colspan="3" th:text="${message}"></th>
+        <th colspan="3" ></th>
     </tr>
     <tr th:each="customer, state : ${customers}">
         <td th:text="${customer.getName()}"></td>
@@ -85,7 +92,7 @@
     <a class="text-decoration-none button" th:href="@{/customer(page=${customers.number - 1}
            , nameSearch=${nameSearch}
            , emailSearch=${emailSearch}
-           , customerType=${customerTypeId})}" th:if="${customers.hasPrevious()}">
+           , customerTypeId=${customerTypeId})}" th:if="${customers.hasPrevious()}">
         Previous
     </a>
 
@@ -94,7 +101,7 @@
     <a class="text-decoration-none button" th:href="@{/customer(page=${customers.number + 1}
            , nameSearch=${nameSearch}
            , emailSearch=${emailSearch}
-           , customerType=${customerTypeId})}" th:if="${customers.hasNext()}">
+           , customerTypeId=${customerTypeId})}" th:if="${customers.hasNext()}">
         Next
     </a>
 </div>

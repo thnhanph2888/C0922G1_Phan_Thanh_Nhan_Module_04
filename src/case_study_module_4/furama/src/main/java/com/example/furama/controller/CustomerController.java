@@ -29,17 +29,21 @@ public class CustomerController {
 
     @GetMapping("")
     public String searchByNameAndEmailAndCustomerType(
-            @RequestParam(value = "nameSearch", defaultValue = "%%") String nameSearch
-            , @RequestParam(value = "emailSearch", defaultValue = "%%") String emailSearch
-            , @RequestParam(value = "customerType", defaultValue = "%%") String customerType
+            @RequestParam(value = "nameSearch", defaultValue = "") String nameSearch
+            , @RequestParam(value = "emailSearch", defaultValue = "") String emailSearch
+            , @RequestParam(value = "customerTypeId", defaultValue = "0") int customerTypeId
             , Model model
             ,@RequestParam(value = "page", defaultValue = "0") int page) {
         Pageable pageable = PageRequest.of(page, 5);
-        model.addAttribute("customers", customerService.searchByNameAndEmailAndCustomerType(pageable
-                , nameSearch, emailSearch, customerType));
+        if (customerTypeId != 0) {
+            model.addAttribute("customers", customerService.searchByNameAndEmailAndCustomerType(pageable
+                    , nameSearch, emailSearch, customerTypeId));
+        } else {
+            model.addAttribute("customers", customerService.findByNameAndEmail(nameSearch, emailSearch, pageable));
+        }
         model.addAttribute("nameSearch", nameSearch);
         model.addAttribute("emailSearch", emailSearch);
-        model.addAttribute("customerTypeId", customerType);
+        model.addAttribute("customerTypeId", customerTypeId);
         return "/customer/home";
     }
 
