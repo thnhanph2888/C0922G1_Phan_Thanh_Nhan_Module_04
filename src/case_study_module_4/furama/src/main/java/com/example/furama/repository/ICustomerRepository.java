@@ -11,7 +11,6 @@ import java.util.List;
 @Repository
 public interface ICustomerRepository extends JpaRepository<Customer, Integer> {
     Page<Customer> findByNameContainingAndEmailContaining(String nameSearch,String emailSearch, Pageable pageable);
-
-    Page<Customer> findByNameContainingAndEmailContainingAndCustomerType_Id(Pageable pageable, @Param("name") String name, @Param("email") String email, @Param("customerTypeId") int customerTypeId);
+    Page<Customer> findByNameContainingAndEmailAndCustomerType_Id(Pageable pageable, @Param("name") String name, @Param("email") String email, @Param("customerTypeId") int customerTypeId);
     List<Customer> findByIdCardOrPhoneNumberOrEmail(String idCard, String phoneNumber, String email);
 }

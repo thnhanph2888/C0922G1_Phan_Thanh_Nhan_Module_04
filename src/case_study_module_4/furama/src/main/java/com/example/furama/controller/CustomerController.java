@@ -1,5 +1,4 @@
 package com.example.furama.controller;
-
 import com.example.furama.dto.CustomerDto;
 import com.example.furama.model.Customer;
 import com.example.furama.service.ICustomerService;
@@ -50,7 +49,7 @@ public class CustomerController {
     @GetMapping("/showAdd")
     public String showAdd(Model model) {
         model.addAttribute("customer", new CustomerDto());
-        return "/customer/add";
+        return "customer/add_customer";
     }
 
     @PostMapping("/save")
@@ -86,6 +85,6 @@ public class CustomerController {
     @GetMapping("/update/{idUpdate}")
     public String showUpdate(@PathVariable int idUpdate, Model model) {
         model.addAttribute("customer", customerService.findById(idUpdate));
-        return "customer/update";
+        return "customer/update_customer";
     }
 }

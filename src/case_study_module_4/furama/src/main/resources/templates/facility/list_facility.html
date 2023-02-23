@@ -12,10 +12,11 @@
 <div id="header">
     <div th:insert="customer/home.html :: banner"></div>
     <ul id="ul">
-        <li><a th:href="@{/customer}">Home</a></li>
+        <li><a href="#dsdf">Home</a></li>
+        <li><a th:href="@{/customer}">Customer</a></li>
         <li><a href="#ds">Employee</a></li>
-        <li><a href="#contact">Customer</a></li>
         <li><a th:href="@{/facility}">Facility</a></li>
+        <li><a th:href="@{/contract}">Contract</a></li>i>
 
         <li class="liRight">
             <form class="d-flex" role="search" action="/facility" method="get">
@@ -40,6 +41,7 @@
         <th>Chi phí thuê</th>
         <th>Số lượng người tối đa</th>
         <th>Kiểu thuê</th>
+        <th>Loại dịch vụ</th>
         <th>Tiêu chuẩn phòng</th>
         <th>Mô tả tiện nghi khác</th>
         <th>Diện tích hồ bơi</th>
@@ -53,6 +55,7 @@
         <td th:text="${facility.getArea()}"></td>
         <td th:text="${facility.getCost()}"></td>
         <td th:text="${facility.getMaxPeople()}"></td>
+        <td th:text="${facility.getRentType().getName()}"></td>
         <td th:text="${facility.getFacilityType().getName()}"></td>
         <td th:text="${facility.getStandardRoom()}"></td>
         <td th:text="${facility.getDescriptionOtherConvenience()}"></td>
@@ -76,7 +79,7 @@
 <div class="page-control">
     <a class="text-decoration-none button" th:href="@{/facility(page=${facilityList.number - 1}
            , nameSearch=${nameSearch}
-           , customerType=${facilityTypeId})}" th:if="${facilityList.hasPrevious()}">
+           , facilityTypeId=${facilityTypeId})}" th:if="${facilityList.hasPrevious()}">
         Previous
     </a>
 
@@ -84,7 +87,7 @@
 
     <a class="text-decoration-none button" th:href="@{/facility(page=${facilityList.number + 1}
            , nameSearch=${nameSearch}
-           , customerType=${facilityTypeId})}" th:if="${facilityList.hasNext()}">
+           , facilityTypeId=${facilityTypeId})}" th:if="${facilityList.hasNext()}">
         Next
     </a>
 </div>

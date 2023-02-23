@@ -75,4 +75,10 @@ public class FacilityController {
         }
         return "redirect:/facility";
     }
+
+    @GetMapping("/update/{idUpdate}")
+    public String showUpdate(@PathVariable int idUpdate, Model model) {
+        model.addAttribute("facility", facilityService.findById(idUpdate));
+        return "/facility/update_facility";
+    }
 }

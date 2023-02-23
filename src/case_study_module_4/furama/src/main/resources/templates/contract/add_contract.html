@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+            crossorigin="anonymous"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style>
+        .with-middle {
+            width: 100px;
+        }
+
+        .with-large {
+            width: 400px;
+        }
+    </style>
+</head>
+<body>
+<div class="d-flex justify-content-center mt-5">
+    <h3>Add New Contract</h3>
+</div>
+
+<div class="d-flex justify-content-center mt-5">
+    <form action="/contract/save" method="post">
+        <table class="table" th:object="${contractDto}">
+            <tr>
+                <td>
+                    <label class="with-middle" for="startDate">Ngày bắt đầu: </label>
+                </td>
+                <td>
+                    <input class="with-large" id="startDate" th:field="*{startDate}">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="with-middle" for="endDate">Ngày kết thúc: </label>
+                </td>
+                <td>
+                    <input class="with-large" id="endDate" th:field="*{endDate}">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="with-middle" for="deposit">Tiền gửi: </label>
+                </td>
+                <td>
+                    <input class="with-large" id="deposit" th:field="*{deposit}">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="with-middle" for="totalMoney">Tổng tiền: </label>
+                </td>
+                <td >
+                    <input id="totalMoney" readonly class="with-large" th:field="*{totalMoney}">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Dịch vụ:
+                </td>
+                <td>
+                    <select id="facilityId" th:field="*{facility}">
+                        <option th:each="facility : ${facilityList}" th:text="${facility.getName()}" ,
+                                th:value="${facility.getId()}"></option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Nhân viên:
+                </td>
+                <td>
+                    <select th:field="*{employee}">
+                        <option th:each="employee : ${employeeList}" th:text="${employee.getName()}" ,
+                                th:value="${employee.getId()}"></option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Khách hàng thuê dịch vụ:
+                </td>
+                <td>
+                    <select th:field="*{customer}">
+                        <option th:each="customer : ${customerList}" th:text="${customer.getName()}" ,
+                                th:value="${customer.getId()}"></option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Dịch vụ đính kèm</td>
+                <td>
+                    <button onclick="getListAttachFacility()" type="button" class="btn btn-success"
+                            data-bs-toggle="modal"
+                            data-bs-target="#addAttachFacility">
+                        +
+                    </button>
+                    <div id="listId"></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a th:href="@{/contract}" class="btn btn-secondary">Hủy bỏ</a>
+                </td>
+                <td>
+                    <button class="btn btn-success" type="submit">Tạo hợp đồng</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="addAttachFacility" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Thêm mới dịch vụ đi kèm</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="select"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" onclick="addAttachFacility()" data-bs-dismiss="modal" class="btn btn-success">Thêm</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    let listId = [];
+    let listQuality = [];
+    let totalMoney = 0;
+
+    function getListAttachFacility() {
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: 'http://localhost:8080/api/getListAttachFacility',
+            success: function (data) {
+                let content = "";
+                content += "<select id='attach'>";
+                for (let i = 0; i < data.length; i++) {
+                    content += `<option value='${data[i].id}'>${data[i].name}</option>`
+                }
+                content += "</select>";
+                content += "<input id='quality' placeholder='nhập số lượng..'>";
+                $("#select").html(content);
+            }
+        })
+    }
+
+    function addAttachFacility() {
+        let idAttachFacility = document.getElementById("attach").value;
+        let quality = document.getElementById("quality").value;
+        listId.push(idAttachFacility);
+        listQuality.push(quality);
+        let content = "<table class='table'> <tr>"
+        content += `<td><input  name="listIdAttach" value="${listId.toString()}"></td>`;
+        content += `<td><input  name="listQuality" value="${listQuality.toString()}"></td>`
+        content += "</tr> </table>"
+        $("#listId").html(content);
+        setTotalMoneyAdd();
+    }
+
+    function setTotalMoneyAdd() {
+        let quality = parseInt(document.getElementById("quality").value);
+        let idAttachFacility = parseInt(document.getElementById("attach").value);
+        let idFacility = parseInt(document.getElementById("facilityId").value);
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: "http://localhost:8080/api/getCurrentTotalMoneyAdd?quality=" + quality
+                                                     + "&&attachFacilityId=" + idAttachFacility
+                                                     + "&&facilityId=" + idFacility,
+            success: function (data){
+                totalMoney += data
+                document.getElementById("totalMoney").value = totalMoney;
+            }
+        })
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
+        integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD"
+        crossorigin="anonymous"></script>
+</body>
+</html>

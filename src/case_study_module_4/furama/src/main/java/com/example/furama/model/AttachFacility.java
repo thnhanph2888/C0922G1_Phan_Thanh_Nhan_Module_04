@@ -1,5 +1,7 @@
 package com.example.furama.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -16,9 +18,9 @@ public class AttachFacility {
     private double cost;
     @Column(length = 100, nullable = false)
     private String status;
-    @ManyToOne
-    @JoinColumn(name = "contract_detail_id", referencedColumnName = "id")
-    private ContractDetail contractDetail;
+    @JsonBackReference
+    @OneToMany(mappedBy = "attachFacility")
+    private Set<ContractDetail> contractDetailSet;
 
     public AttachFacility() {
     }
@@ -27,12 +29,12 @@ public class AttachFacility {
         return unit;
     }
 
-    public ContractDetail getContractDetail() {
-        return contractDetail;
+    public Set<ContractDetail> getContractDetailSet() {
+        return contractDetailSet;
     }
 
-    public void setContractDetail(ContractDetail contractDetail) {
-        this.contractDetail = contractDetail;
+    public void setContractDetailSet(Set<ContractDetail> contractDetailSet) {
+        this.contractDetailSet = contractDetailSet;
     }
 
     public void setUnit(String unit) {

@@ -12,32 +12,35 @@
 <div id="header">
     <div th:fragment="banner"  id="banner" class="row">
         <div class="col-lg-6">
-            <img id="logo" width="122px" height="122" src="https://cdn.nhanlucnganhluat.vn/uploads/images/051D288B/logo/2018-12/Logo-FURAMA-RESORT.jpg" alt="image">
+            <img id="logo" width="200px" height="200px" src="https://cdn.nhanlucnganhluat.vn/uploads/images/051D288B/logo/2018-12/Logo-FURAMA-RESORT.jpg" alt="image">
         </div>
-        <div class="col-lg-6 text-center">
+        <div class="col-lg-6 pt-5 text-center">
                 <h5 class="text-white">Phan Thành Nhân</h5>
                 <h6 class="text-white ">C0922G1</h6>
         </div>
     </div>
     <ul id="ul">
-        <li><a th:href="@{/customer}">Home</a></li>
+        <li><a href="#dsdf">Home</a></li>
+        <li><a th:href="@{/customer}">Customer</a></li>
         <li><a href="#ds">Employee</a></li>
-        <li><a href="#contact">Customer</a></li>
         <li><a th:href="@{/facility}">Facility</a></li>
+        <li><a th:href="@{/contract}">Contract</a></li>
 
         <li class="liRight">
             <form class="d-flex" role="search" action="/customer" method="get">
                 <input name="action" value="search" hidden>
                 <input name="nameSearch" class="form-control me-2" type="search" placeholder="name..">
                 <input name="emailSearch" class="form-control me-2" type="search" placeholder="email..">
-                <select name="customerTypeId">
+                <select name="customerTypeId" type="select">
                     <option th:each="customerType : ${customerTypes}" th:text="${customerType.getName()}"
                             th:value="${customerType.getId()}"></option>
-                    <option value="">All</option>
+                    <option>All</option>
+                    <option selected>Chọn loại khách hàng</option>
                 </select>
                 <button class="btn btn-success" type="submit">Search</button>
             </form>
         </li>
+
     </ul>
 </div>
 

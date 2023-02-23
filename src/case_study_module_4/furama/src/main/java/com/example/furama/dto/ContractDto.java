@@ -1,32 +1,31 @@
-package com.example.furama.model;
+package com.example.furama.dto;
 
-import javax.persistence.*;
+import com.example.furama.model.ContractDetail;
+import com.example.furama.model.Customer;
+import com.example.furama.model.Employee;
+import com.example.furama.model.Facility;
 import java.util.Set;
 
-@Entity
-public class Contract {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ContractDto {
     private int id;
-    @ManyToOne
-    @JoinColumn(name = "facility_id", referencedColumnName = "id")
     private Facility facility;
-    @ManyToOne
-    @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
-    @Column(nullable = false)
     private String startDate;
-    @Column(nullable = false)
     private String endDate;
-    @Column(nullable = false)
     private double deposit;
-    @OneToMany(mappedBy = "contract")
+    private double totalMoney;
     private Set<ContractDetail> contractDetailSet;
-    @ManyToOne
-    @JoinColumn(name = "employee_id", referencedColumnName = "id")
     private Employee employee;
 
-    public Contract() {
+    public ContractDto() {
+    }
+
+    public double getTotalMoney() {
+        return totalMoney;
+    }
+
+    public void setTotalMoney(double totalMoney) {
+        this.totalMoney = totalMoney;
     }
 
     public int getId() {
