@@ -55,7 +55,7 @@
                 <td>
                     <label class="with-middle" for="totalMoney">Tổng tiền: </label>
                 </td>
-                <td >
+                <td>
                     <input id="totalMoney" readonly class="with-large" th:field="*{totalMoney}">
                 </td>
             </tr>
@@ -64,7 +64,7 @@
                     Dịch vụ:
                 </td>
                 <td>
-                    <select id="facilityId" th:field="*{facility}">
+                    <select onchange="setTotalMoneyAdd()" id="facilityId" th:field="*{facility}">
                         <option th:each="facility : ${facilityList}" th:text="${facility.getName()}" ,
                                 th:value="${facility.getId()}"></option>
                     </select>
@@ -115,7 +115,7 @@
     </form>
 </div>
 
-<!-- Modal -->
+<!-- Modal add attach facility-->
 <div class="modal fade" id="addAttachFacility" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -124,11 +124,16 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div id="select"></div>
+                <select id='attach'>
+
+                </select>
+                <input id='quality' placeholder='nhập số lượng..'>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                <button type="button" onclick="addAttachFacility()" data-bs-dismiss="modal" class="btn btn-success">Thêm</button>
+                <button type="button" onclick="addAttachFacility()" data-bs-dismiss="modal" class="btn btn-success">
+                    Thêm
+                </button>
             </div>
         </div>
     </div>
@@ -138,6 +143,7 @@
     let listId = [];
     let listQuality = [];
     let totalMoney = 0;
+    let costFacility = 0;
 
     function getListAttachFacility() {
         $.ajax({
@@ -146,13 +152,10 @@
             url: 'http://localhost:8080/api/getListAttachFacility',
             success: function (data) {
                 let content = "";
-                content += "<select id='attach'>";
                 for (let i = 0; i < data.length; i++) {
                     content += `<option value='${data[i].id}'>${data[i].name}</option>`
                 }
-                content += "</select>";
-                content += "<input id='quality' placeholder='nhập số lượng..'>";
-                $("#select").html(content);
+                $("#attach").html(content);
             }
         })
     }
@@ -171,17 +174,29 @@
     }
 
     function setTotalMoneyAdd() {
-        let quality = parseInt(document.getElementById("quality").value);
-        let idAttachFacility = parseInt(document.getElementById("attach").value);
+        let quality = 0;
+        let idAttachFacility = 0;
+        let isGetFacility = true;
+        if (!isNaN(parseInt(document.getElementById("quality").value))) {
+            isGetFacility = false;
+            quality = parseInt(document.getElementById("quality").value);
+            idAttachFacility = parseInt(document.getElementById("attach").value);
+        }
         let idFacility = parseInt(document.getElementById("facilityId").value);
         $.ajax({
             type: "GET",
             dataType: "json",
             url: "http://localhost:8080/api/getCurrentTotalMoneyAdd?quality=" + quality
-                                                     + "&&attachFacilityId=" + idAttachFacility
-                                                     + "&&facilityId=" + idFacility,
-            success: function (data){
-                totalMoney += data
+                + "&&attachFacilityId=" + idAttachFacility
+                + "&&facilityId=" + idFacility,
+            success: function (data) {
+                if (isGetFacility) {
+                    totalMoney -= costFacility;
+                    costFacility = data;
+                    totalMoney += costFacility;
+                } else {
+                    totalMoney += data;
+                }
                 document.getElementById("totalMoney").value = totalMoney;
             }
         })

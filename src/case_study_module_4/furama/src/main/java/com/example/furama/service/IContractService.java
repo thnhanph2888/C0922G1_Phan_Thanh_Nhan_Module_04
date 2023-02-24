@@ -10,6 +10,7 @@ public interface IContractService {
     boolean save(Contract contract);
     Contract findById(int id);
     Double getCurrentTotalMoney(int idContract);
+    Double getCurrentTotalFacility(int idFacility);
     double getCurrentTotalAdd(int quality, int attachFacilityId, int facilityId);
 
     Page<IContractDto> findAllContractDto(Pageable pageable);

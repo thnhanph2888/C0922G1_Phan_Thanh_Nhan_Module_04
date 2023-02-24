@@ -39,6 +39,11 @@ public class ContractService implements IContractService {
     }
 
     @Override
+    public Double getCurrentTotalFacility(int idFacility) {
+        return contractRepository.getTotalMoneyFacility(idFacility);
+    }
+
+    @Override
     public double getCurrentTotalAdd(int quality, int attachFacilityId, int facilityId) {
         return contractRepository.getTotalMoneyAdd(quality, attachFacilityId, facilityId);
     }

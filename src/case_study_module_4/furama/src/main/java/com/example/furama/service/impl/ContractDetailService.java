@@ -12,6 +12,12 @@ import org.springframework.stereotype.Service;
 public class ContractDetailService implements IContractDetailService {
     @Autowired
     private IContractDetailRepository contractDetailRepository;
+
+    @Override
+    public boolean addContractDetail(int attachId, int quality, int contractId) {
+        return contractDetailRepository.addContractDetail(attachId, quality, contractId);
+    }
+
     @Override
     public boolean save(ContractDetail contractDetail) {
       try {

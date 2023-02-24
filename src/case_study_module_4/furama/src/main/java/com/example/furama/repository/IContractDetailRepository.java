@@ -1,11 +1,11 @@
 package com.example.furama.repository;
 
 import com.example.furama.model.ContractDetail;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 public interface IContractDetailRepository extends JpaRepository<ContractDetail, Integer> {
-    ContractDetail findByAttachFacility_IdAndAndContract_Id(int attachFacilityId, int contractId);
+    @Query(nativeQuery = true, value = " INSERT INTO `contract_detail` (contract_id, attach_facility_id, quality) VALUES (:idContract, :attachId, :quality)")
+    boolean addContractDetail(@Param("attachId") int attachId,@Param("quality") int quality,@Param("idContract") int idContract);
 }

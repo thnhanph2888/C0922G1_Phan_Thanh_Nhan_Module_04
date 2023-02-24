@@ -54,16 +54,13 @@
         <td th:text="${contractDto.getDeposit()}"></td>
         <td th:text="${contractDto.getTotalMoney()}"></td>
         <td>
-            <button type="button"  class="btn btn-success">
+            <button th:attr="onclick=|showAddAttachFacility('${contractDto.getIdContract}')|" type="button" data-bs-toggle="modal" data-bs-target="#addAttachFacility" class="btn btn-success">
                 +
             </button>
             <span class="dropdown">
-                <button onclick="setListAttachFacility(${contractDto.getIdContract()})"  class="btn btn-success dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
+                <button type="button" data-bs-toggle="modal" data-bs-target="#showListAttachFacility" th:attr="onclick=|setListAttachFacility('${contractDto.getIdContract()}')|" class="btn btn-success" >
                     Danh sách các dịch vụ đi kèm
                 </button>
-                <ul id="listAttachFacility" class="dropdown-menu">
-                </ul>
             </span>
         </td>
     </tr>
@@ -83,26 +80,50 @@
 </div>
 <br>
 <hr>
-<!----------------Modal add facility-->
-<div class="modal fade" id="addAttachFacility" tabindex="-1" aria-labelledby="exampleLabel" aria-hidden="true">
+
+<!-----------  show attach facility------>
+<div class="modal fade" id="showListAttachFacility" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleLabel">Thêm mới dịch vụ đi kèm</h1>
+                <h1 class="modal-title fs-5" id="exampleModal">Dịch vụ đi kèm</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div id="select"></div>
+                <select id="listAttachFacility">
+
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-----------  add attach facility------->
+<div class="modal fade" id="addAttachFacility" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" >Thêm mới dịch vụ đi kèm</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id='formAttach'>
+
+                </div>
+                <input id='quality' placeholder='nhập số lượng..'>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                <button type="button" onclick="addAttachFacility()" data-bs-dismiss="modal" class="btn btn-success">Thêm</button>
+                <button type="button" th:attr="onclick=|addAttachFacility('')|" data-bs-dismiss="modal" class="btn btn-success">Thêm</button>
             </div>
         </div>
     </div>
 </div>
 
-<!--------------- Modal Delete Contract-->
+<!---------------  Delete Contract--------->
 <div class="modal fade" id="delete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -129,24 +150,41 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
 <script>
-    function setInfoDelete(idDelete, nameDelete) {
-        document.getElementById("idDelete").value = idDelete;
-        document.getElementById("nameDelete").innerText = nameDelete;
+
+
+    function addAttachFacility() {
+        let idAttachFacility = parseInt(document.getElementById("attachId").value);
+        let quality = parseInt(document.getElementById("quality").value);
+        let idContract = parseInt(document.getElementById("idContractAdd").value);
+        console.log(idAttachFacility + "dsfsf" + quality + idContract);
+        $.ajax({
+            type: "GET",
+            contentType: "json",
+            url: "http://localhost:8080/api/addContractDetail?attachFacilityId="+idAttachFacility
+                                                    + "&&quality=" + quality
+                                                    + "&&contractId=" + idContract
+        })
     }
 
-    function setTotalMoney(idContract) {
+    function showAddAttachFacility(idContract) {
         $.ajax({
             type: "GET",
             dataType: "json",
-            url: "http://localhost:8080/api/getCurrentTotalMoney?idContract=" + idContract,
+            url: 'http://localhost:8080/api/getListAttachFacility',
             success: function (data) {
-                let content = `<span>${data}</span>`;
-                $("#totalMoney").html(content);
+                let content = "<select id='attachId'>";
+                for (let i = 0; i < data.length; i++) {
+                    content += `<option value='${data[i].id}'>${data[i].name}</option>`
+                }
+                content +=`</select>`
+                content += `<input hidden id="idContractAdd" value="${idContract}">`
+                $("#formAttach").html(content);
             }
         })
     }
 
     function setListAttachFacility(idContract) {
+        console.log("chay")
         $.ajax({
             type: "GET",
             dataType: "json",
@@ -155,7 +193,7 @@
                 console.log(data)
                 let content = "";
                 for (let i = 0; i < data.length; i++) {
-                    content += `<li><a class="dropdown-item" href="#" >${data[i].name}</a></li>`
+                    content += `<option>${data[i].name}</option>`
                 }
                $("#listAttachFacility").html(content);
             }

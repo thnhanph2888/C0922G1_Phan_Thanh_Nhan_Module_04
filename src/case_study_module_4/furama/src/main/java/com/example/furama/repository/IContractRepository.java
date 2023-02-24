@@ -23,6 +23,8 @@ public interface IContractRepository extends JpaRepository<Contract, Integer> {
     double getTotalMoneyAdd(@RequestParam("quality") int quality
             , @RequestParam("attachFacilityId") int attachFacilityId
             , @RequestParam("facilityId") int facilityId);
+    @Query(nativeQuery = true, value = "select facility.cost from `facility` where facility.id = :facilityId")
+    double getTotalMoneyFacility(@RequestParam("facilityId") int facilityId);
 
     @Query(nativeQuery = true, value = "select `contract`.id as idContract,`contract`.start_date as startDate\n" +
             ", `contract`.end_date as endDate, `contract`.deposit as deposit, `facility`.name as facilityName\n" +
@@ -31,6 +33,13 @@ public interface IContractRepository extends JpaRepository<Contract, Integer> {
             "             left join `facility` on `facility`.id = `contract`.facility_id\n" +
             "             left join `contract_detail` on `contract`.id = `contract_detail`.contract_id\n" +
             "             left join `attach_facility` on `attach_facility`.id = `contract_detail`.attach_facility_id\n" +
-            "             left join `customer` on `customer`.id = `contract`.customer_id")
+            "             left join `customer` on `customer`.id = `contract`.customer_id", countQuery = "select `contract`.id as idContract,`contract`.start_date as startDate\n\" +\n" +
+            "            \", `contract`.end_date as endDate, `contract`.deposit as deposit, `facility`.name as facilityName\n\" +\n" +
+            "            \", `customer`.name as customerName,  (ifnull(`facility`.cost,0)+ (ifnull(`contract_detail`.quality,0) * ifnull( `attach_facility`.cost,0))) as totalMoney \n\" +\n" +
+            "            \"             from `contract`\n\" +\n" +
+            "            \"             left join `facility` on `facility`.id = `contract`.facility_id\n\" +\n" +
+            "            \"             left join `contract_detail` on `contract`.id = `contract_detail`.contract_id\n\" +\n" +
+            "            \"             left join `attach_facility` on `attach_facility`.id = `contract_detail`.attach_facility_id\n\" +\n" +
+            "            \"             left join `customer` on `customer`.id = `contract`.customer_id")
     Page<IContractDto> findAllContract(Pageable pageable);
 }
