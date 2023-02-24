@@ -15,7 +15,8 @@ public class ContractDetailService implements IContractDetailService {
 
     @Override
     public boolean addContractDetail(int attachId, int quality, int contractId) {
-        return contractDetailRepository.addContractDetail(attachId, quality, contractId);
+        contractDetailRepository.addContractDetail(attachId, quality, contractId);
+        return true;
     }
 
     @Override

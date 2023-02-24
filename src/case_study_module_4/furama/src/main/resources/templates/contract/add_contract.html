@@ -25,14 +25,14 @@
 </div>
 
 <div class="d-flex justify-content-center mt-5">
-    <form action="/contract/save" method="post">
-        <table class="table" th:object="${contractDto}">
+    <form action="/contract/save" method="post" th:object="${contractDto}">
+        <table class="table" >
             <tr>
                 <td>
                     <label class="with-middle" for="startDate">Ngày bắt đầu: </label>
                 </td>
                 <td>
-                    <input class="with-large" id="startDate" th:field="*{startDate}">
+                    <input class="with-large form-control" id="startDate" th:field="*{startDate}">
                 </td>
             </tr>
             <tr>
@@ -100,7 +100,7 @@
                             data-bs-target="#addAttachFacility">
                         +
                     </button>
-                    <div id="listId"></div>
+                    <div id="container"></div>
                 </td>
             </tr>
             <tr>
@@ -140,7 +140,7 @@
 </div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
-    let listId = [];
+    let listAttachFacilityId = [];
     let listQuality = [];
     let totalMoney = 0;
     let costFacility = 0;
@@ -163,40 +163,44 @@
     function addAttachFacility() {
         let idAttachFacility = document.getElementById("attach").value;
         let quality = document.getElementById("quality").value;
-        listId.push(idAttachFacility);
+        listAttachFacilityId.push(idAttachFacility);
         listQuality.push(quality);
         let content = "<table class='table'> <tr>"
-        content += `<td><input  name="listIdAttach" value="${listId.toString()}"></td>`;
+        content += `<td><input  name="listIdAttach" value="${listAttachFacilityId.toString()}"></td>`;
         content += `<td><input  name="listQuality" value="${listQuality.toString()}"></td>`
         content += "</tr> </table>"
-        $("#listId").html(content);
+        $("#container").html(content);
         setTotalMoneyAdd();
     }
 
     function setTotalMoneyAdd() {
-        let quality = 0;
+        let quantity = 0;
         let idAttachFacility = 0;
         let isGetFacility = true;
         if (!isNaN(parseInt(document.getElementById("quality").value))) {
             isGetFacility = false;
-            quality = parseInt(document.getElementById("quality").value);
+            quantity = parseInt(document.getElementById("quality").value);
             idAttachFacility = parseInt(document.getElementById("attach").value);
         }
         let idFacility = parseInt(document.getElementById("facilityId").value);
         $.ajax({
             type: "GET",
             dataType: "json",
-            url: "http://localhost:8080/api/getCurrentTotalMoneyAdd?quality=" + quality
+            url: "http://localhost:8080/api/getCurrentTotalMoneyAdd?quality=" + quantity
                 + "&&attachFacilityId=" + idAttachFacility
                 + "&&facilityId=" + idFacility,
             success: function (data) {
+                console.log(isGetFacility)
                 if (isGetFacility) {
                     totalMoney -= costFacility;
                     costFacility = data;
                     totalMoney += costFacility;
                 } else {
+                    totalMoney -= costFacility;
                     totalMoney += data;
                 }
+                document.getElementById("quality").value = null;
+                document.getElementById("attach").value = null;
                 document.getElementById("totalMoney").value = totalMoney;
             }
         })

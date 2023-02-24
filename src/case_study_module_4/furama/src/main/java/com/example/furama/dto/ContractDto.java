@@ -4,14 +4,19 @@ import com.example.furama.model.ContractDetail;
 import com.example.furama.model.Customer;
 import com.example.furama.model.Employee;
 import com.example.furama.model.Facility;
+
+import javax.validation.constraints.NotBlank;
 import java.util.Set;
 
 public class ContractDto {
     private int id;
     private Facility facility;
     private Customer customer;
+    @NotBlank(message = "ngày bắt đầu không được để trống")
     private String startDate;
+    @NotBlank(message = "ngày kết thúc không được để trống")
     private String endDate;
+    @NotBlank(message = "")
     private double deposit;
     private double totalMoney;
     private Set<ContractDetail> contractDetailSet;

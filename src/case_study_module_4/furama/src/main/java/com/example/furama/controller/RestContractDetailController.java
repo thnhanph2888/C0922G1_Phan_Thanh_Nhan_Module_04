@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,16 +63,6 @@ public class RestContractDetailController {
         return new ResponseEntity<>(totalMoney, HttpStatus.OK);
     }
 
-//    @GetMapping("/addContractDetail")
-//    public ResponseEntity<Boolean> addContractDetail(@RequestParam("quality") int quality
-//            , @RequestParam("attachFacilityId") int attachFacilityId
-//            , @RequestParam("contractId") int contractId) {
-//              if (contractDetailService.addContractDetail(attachFacilityId, quality, contractId)) {
-//                  return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//              } else {
-//                  return new ResponseEntity<>(true, HttpStatus.OK);
-//              }
-//    }
     @GetMapping("/addContractDetail")
     public ResponseEntity<Boolean> addContractDetail(@RequestParam("quality") int quality
             , @RequestParam("attachFacilityId") int attachFacilityId
