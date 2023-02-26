@@ -3,11 +3,14 @@ package com.example.furama.dto;
 import com.example.furama.model.Contract;
 import com.example.furama.model.FacilityType;
 import com.example.furama.model.RentType;
+
+import javax.validation.constraints.Pattern;
 import java.util.Set;
 
 public class FacilityDto {
 
     private int id;
+    @Pattern(regexp = "^[A-Z]\\D*$", message = "Chữ cái đầu tiên của tên phải viết hoa và tên không được viết số")
     private String name;
     private int area;
     private double cost;

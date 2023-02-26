@@ -17,6 +17,9 @@
         .with-large {
             width: 400px;
         }
+        .error {
+            color: red;
+        }
     </style>
 </head>
 <body>
@@ -36,6 +39,9 @@
                 </td>
             </tr>
             <tr>
+                <td class="error" colspan="2" th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></td>
+            </tr>
+            <tr>
                 <td>
                     <label class="with-middle" for="endDate">Ngày kết thúc: </label>
                 </td>
@@ -44,12 +50,18 @@
                 </td>
             </tr>
             <tr>
+                <td class="error" colspan="2" th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></td>
+            </tr>
+            <tr>
                 <td>
                     <label class="with-middle" for="deposit">Tiền gửi: </label>
                 </td>
                 <td>
                     <input class="with-large" id="deposit" th:field="*{deposit}">
                 </td>
+            </tr>
+            <tr>
+                <td class="error" colspan="2" th:if="${#fields.hasErrors('deposit')}" th:errors="*{deposit}"></td>
             </tr>
             <tr>
                 <td>
@@ -115,7 +127,8 @@
     </form>
 </div>
 
-<!-- Modal add attach facility-->
+<!------- Modal get info attach facility-->
+
 <div class="modal fade" id="addAttachFacility" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -124,14 +137,13 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <select id='attach'>
-
-                </select>
+                <div id="listAttachFacility">
+                </div>
                 <input id='quality' placeholder='nhập số lượng..'>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                <button type="button" onclick="addAttachFacility()" data-bs-dismiss="modal" class="btn btn-success">
+                <button type="button" onclick="getInfoAttachFacility()" data-bs-dismiss="modal" class="btn btn-success">
                     Thêm
                 </button>
             </div>
@@ -151,24 +163,28 @@
             dataType: "json",
             url: 'http://localhost:8080/api/getListAttachFacility',
             success: function (data) {
-                let content = "";
+                let content = `<select id="attach" class="form-select"
+                                aria-label="Default select example>`
                 for (let i = 0; i < data.length; i++) {
-                    content += `<option value='${data[i].id}'>${data[i].name}</option>`
+                    content += `<option th:data-cost="${data[i].name}" value='${data[i].id}'>${data[i].name}</option>`
                 }
-                $("#attach").html(content);
+                content+= "</select>"
+                $("#listAttachFacility").html(content);
             }
         })
     }
-
-    function addAttachFacility() {
+    function getInfoAttachFacility() {
         let idAttachFacility = document.getElementById("attach").value;
         let quality = document.getElementById("quality").value;
         listAttachFacilityId.push(idAttachFacility);
         listQuality.push(quality);
-        let content = "<table class='table'> <tr>"
-        content += `<td><input  name="listIdAttach" value="${listAttachFacilityId.toString()}"></td>`;
-        content += `<td><input  name="listQuality" value="${listQuality.toString()}"></td>`
-        content += "</tr> </table>"
+        let content = "<table id='tableAttachFacility' class='table'>"
+            content += `<tr><td><input  name="listIdAttach" value="${listAttachFacilityId.toString()}"></td>`;
+            content += `<td><input  name="listQuality" value="${listQuality.toString()}"></td></tr>`
+        for (let i = 0; i < listQuality.length; i++) {
+            content += `<td>${listQuality[i]}</td></tr>`
+        }
+        content += " </table>"
         $("#container").html(content);
         setTotalMoneyAdd();
     }
@@ -199,12 +215,14 @@
                     totalMoney -= costFacility;
                     totalMoney += data;
                 }
+                // không gắn bằng null nó vẫn giữ giá trị
                 document.getElementById("quality").value = null;
                 document.getElementById("attach").value = null;
                 document.getElementById("totalMoney").value = totalMoney;
             }
         })
     }
+
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
         integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"

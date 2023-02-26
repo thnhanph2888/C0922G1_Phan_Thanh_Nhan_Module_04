@@ -10,6 +10,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -60,10 +62,16 @@ public class ContractController {
     }
 
     @PostMapping("/save")
-    public String addOrUpdate(ContractDto contractDto
+    public String addOrUpdate(@Validated ContractDto contractDto
+            , BindingResult bindingResult
+            , Model model
             , RedirectAttributes redirectAttributes
             , @RequestParam(value = "listIdAttach", defaultValue = "") List<Integer> listId
             , @RequestParam(value = "listQuality", defaultValue = "") List<Integer> listQuality) {
+        if (bindingResult.hasErrors()) {
+           model.addAttribute("contractDto", contractDto);
+           return "contract/add_contract";
+        }
         Contract contract = new Contract();
         BeanUtils.copyProperties(contractDto, contract);
         if (contractService.save(contract)) {
@@ -80,7 +88,7 @@ public class ContractController {
     public void addContractDetail(List<Integer> listId, List<Integer> listQuality, int idContract) {
         for (int i = 0; i < listId.size(); i++) {
             contractDetailService.save(new ContractDetail(attachFacilityService.findById(listId.get(i))
-                    ,contractService.findById(idContract), listQuality.get(i)));
+                    , contractService.findById(idContract), listQuality.get(i)));
         }
     }
 }

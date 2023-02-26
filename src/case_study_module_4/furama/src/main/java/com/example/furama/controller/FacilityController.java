@@ -11,6 +11,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -50,12 +52,19 @@ public class FacilityController {
 
     @GetMapping("showAdd")
     public String showAdd(Model model) {
-        model.addAttribute("facility", new FacilityDto());
+        model.addAttribute("facilityDto", new FacilityDto());
         return "facility/add_facility";
     }
 
     @PostMapping("/save")
-    public String addOrUpdate(FacilityDto facilityDto, RedirectAttributes redirectAttributes) {
+    public String addOrUpdate(@Validated FacilityDto facilityDto
+            , BindingResult bindingResult
+            , Model model
+            , RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("facilityDto", facilityDto);
+            return "facility/add_facility";
+        }
         Facility facility = new Facility();
         BeanUtils.copyProperties(facilityDto, facility);
         if (facilityService.addOrUpdate(facility)) {

@@ -1,4 +1,5 @@
 package com.example.furama.controller;
+
 import com.example.furama.dto.CustomerDto;
 import com.example.furama.model.Customer;
 import com.example.furama.service.ICustomerService;
@@ -9,6 +10,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -32,7 +35,7 @@ public class CustomerController {
             , @RequestParam(value = "emailSearch", defaultValue = "") String emailSearch
             , @RequestParam(value = "customerTypeId", defaultValue = "0") int customerTypeId
             , Model model
-            ,@RequestParam(value = "page", defaultValue = "0") int page) {
+            , @RequestParam(value = "page", defaultValue = "0") int page) {
         Pageable pageable = PageRequest.of(page, 5);
         if (customerTypeId != 0) {
             model.addAttribute("customers", customerService.searchByNameAndEmailAndCustomerType(pageable
@@ -48,12 +51,20 @@ public class CustomerController {
 
     @GetMapping("/showAdd")
     public String showAdd(Model model) {
-        model.addAttribute("customer", new CustomerDto());
+        model.addAttribute("customerDto", new CustomerDto());
         return "customer/add_customer";
     }
 
     @PostMapping("/save")
-    public String addOrUpdate(CustomerDto customerDto, @RequestParam(value = "action", defaultValue = "add") String action, RedirectAttributes redirectAttributes) {
+    public String addOrUpdate(@Validated CustomerDto customerDto
+            , BindingResult bindingResult
+            ,Model model
+            , @RequestParam(value = "action", defaultValue = "add") String action
+            , RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("customerDto", customerDto);
+            return "/customer/add_customer";
+        }
         Customer customer = new Customer();
         BeanUtils.copyProperties(customerDto, customer);
         if (customerService.addOrUpdate(customer)) {
@@ -73,13 +84,13 @@ public class CustomerController {
     }
 
     @PostMapping("/delete")
-    public String delete(@RequestParam("idDelete")int idDelete, RedirectAttributes redirectAttributes) {
+    public String delete(@RequestParam("idDelete") int idDelete, RedirectAttributes redirectAttributes) {
         if (customerService.delete(idDelete)) {
             redirectAttributes.addFlashAttribute("message", "Delete success!");
         } else {
             redirectAttributes.addFlashAttribute("message", "Delete failed!");
         }
-       return "redirect:/customer";
+        return "redirect:/customer";
     }
 
     @GetMapping("/update/{idUpdate}")

@@ -16,6 +16,9 @@
         .with-large {
             width: 400px;
         }
+        .error {
+            color: red;
+        }
     </style>
 </head>
 <body>
@@ -25,7 +28,7 @@
 
 <div class="d-flex justify-content-center mt-5">
         <form action="/customer/save" method="post">
-            <table class="table" th:object="${customer}">
+            <table class="table" th:object="${customerDto}">
                 <tr>
                     <td>
                         <label class="with-middle" for="name_customer">Họ tên: </label>
@@ -33,6 +36,9 @@
                     <td>
                         <input class="with-large" id="name_customer" th:field="*{name}">
                     </td>
+                </tr>
+                <tr>
+                    <td class="error" colspan="2"><p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p></td>
                 </tr>
                 <tr>
                     <td>
@@ -62,6 +68,9 @@
                     </td>
                 </tr>
                 <tr>
+                    <td class="error" colspan="2"><p th:if="${#fields.hasErrors('idCard')}" th:errors="*{idCard}"></p></td>
+                </tr>
+                <tr>
                     <td>
                         <label class="with-middle" for="phone_customer">Điện thoại: </label>
                     </td>
@@ -70,12 +79,18 @@
                     </td>
                 </tr>
                 <tr>
+                    <td class="error" colspan="2"><p th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p></td>
+                </tr>
+                <tr>
                     <td>
                         <label class="with-middle" for="email_customer">Email: </label>
                     </td>
                     <td>
                         <input class="with-large" id="email_customer" th:field="*{email}">
                     </td>
+                </tr>
+                <tr>
+                    <td class="error" colspan="2"><p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p></td>
                 </tr>
                 <tr>
                     <td>
@@ -100,7 +115,6 @@
             <input class="btn btn-success" type="submit" value="add">
         </form>
 </div>
-
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
         integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
