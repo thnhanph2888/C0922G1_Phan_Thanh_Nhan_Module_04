@@ -1,5 +1,4 @@
 package com.example.furama.controller;
-
 import com.example.furama.dto.ContractDto;
 import com.example.furama.model.Contract;
 import com.example.furama.model.ContractDetail;
@@ -14,7 +13,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.util.List;
 
 @Controller
@@ -32,6 +30,10 @@ public class ContractController {
     private IContractDetailService contractDetailService;
     @Autowired
     private IAttachFacilityService attachFacilityService;
+    @ModelAttribute
+    public void addListAttachFacility(Model model) {
+        model.addAttribute("listAttachFacility", attachFacilityService.findAll());
+    }
 
     @ModelAttribute
     public void addListEmployee(Model model) {

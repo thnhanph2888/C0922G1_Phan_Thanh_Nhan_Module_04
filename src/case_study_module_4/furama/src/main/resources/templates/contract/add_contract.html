@@ -17,9 +17,6 @@
         .with-large {
             width: 400px;
         }
-        .error {
-            color: red;
-        }
     </style>
 </head>
 <body>
@@ -29,17 +26,14 @@
 
 <div class="d-flex justify-content-center mt-5">
     <form action="/contract/save" method="post" th:object="${contractDto}">
-        <table class="table" >
+        <table class="table">
             <tr>
                 <td>
                     <label class="with-middle" for="startDate">Ngày bắt đầu: </label>
                 </td>
                 <td>
-                    <input class="with-large form-control" id="startDate" th:field="*{startDate}">
+                    <input class="with-large " id="startDate" th:field="*{startDate}">
                 </td>
-            </tr>
-            <tr>
-                <td class="error" colspan="2" th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></td>
             </tr>
             <tr>
                 <td>
@@ -50,18 +44,12 @@
                 </td>
             </tr>
             <tr>
-                <td class="error" colspan="2" th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></td>
-            </tr>
-            <tr>
                 <td>
                     <label class="with-middle" for="deposit">Tiền gửi: </label>
                 </td>
                 <td>
                     <input class="with-large" id="deposit" th:field="*{deposit}">
                 </td>
-            </tr>
-            <tr>
-                <td class="error" colspan="2" th:if="${#fields.hasErrors('deposit')}" th:errors="*{deposit}"></td>
             </tr>
             <tr>
                 <td>
@@ -107,12 +95,14 @@
             <tr>
                 <td>Dịch vụ đính kèm</td>
                 <td>
-                    <button onclick="getListAttachFacility()" type="button" class="btn btn-success"
+                    <button type="button" class="btn btn-success"
                             data-bs-toggle="modal"
                             data-bs-target="#addAttachFacility">
                         +
                     </button>
-                    <div id="container"></div>
+                    <div id="container">
+
+                    </div>
                 </td>
             </tr>
             <tr>
@@ -126,8 +116,11 @@
         </table>
     </form>
 </div>
+<div>
+    <div id="car"></div>
+</div>
 
-<!------- Modal get info attach facility-->
+<!------- Modal get info attach facility to form add-->
 
 <div class="modal fade" id="addAttachFacility" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -137,8 +130,11 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div id="listAttachFacility">
-                </div>
+                <select id="attachListAdd">
+                    <option th:each="attachFacility: ${listAttachFacility}"
+                            th:data-name="${attachFacility.getName()}"
+                            th:value="${attachFacility.getId()}" th:text="${attachFacility.getName()}"></option>
+                </select>
                 <input id='quality' placeholder='nhập số lượng..'>
             </div>
             <div class="modal-footer">
@@ -153,40 +149,44 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
     let listAttachFacilityId = [];
-    let listQuality = [];
+    let listQuantity = [];
+    let listNameAttachFacility = [];
     let totalMoney = 0;
     let costFacility = 0;
 
-    function getListAttachFacility() {
-        $.ajax({
-            type: "GET",
-            dataType: "json",
-            url: 'http://localhost:8080/api/getListAttachFacility',
-            success: function (data) {
-                let content = `<select id="attach" class="form-select"
-                                aria-label="Default select example>`
-                for (let i = 0; i < data.length; i++) {
-                    content += `<option th:data-cost="${data[i].name}" value='${data[i].id}'>${data[i].name}</option>`
-                }
-                content+= "</select>"
-                $("#listAttachFacility").html(content);
-            }
-        })
-    }
     function getInfoAttachFacility() {
-        let idAttachFacility = document.getElementById("attach").value;
-        let quality = document.getElementById("quality").value;
-        listAttachFacilityId.push(idAttachFacility);
-        listQuality.push(quality);
-        let content = "<table id='tableAttachFacility' class='table'>"
-            content += `<tr><td><input  name="listIdAttach" value="${listAttachFacilityId.toString()}"></td>`;
-            content += `<td><input  name="listQuality" value="${listQuality.toString()}"></td></tr>`
-        for (let i = 0; i < listQuality.length; i++) {
-            content += `<td>${listQuality[i]}</td></tr>`
+        let idAttachFacility = parseInt(document.getElementById("attachListAdd").value);
+        let nameAttachFacility = $("#attachListAdd option:selected").data("name")
+        let quantity = parseInt(document.getElementById("quality").value);
+        if (!isNaN(parseInt(document.getElementById("quality").value))) {
+            if (isAttachFacilityContain(idAttachFacility) !== -1) {
+                listQuantity[isAttachFacilityContain(idAttachFacility)] = listQuantity[isAttachFacilityContain(idAttachFacility)] + quantity;
+            } else {
+                listAttachFacilityId.push(idAttachFacility);
+                listNameAttachFacility.push(nameAttachFacility);
+                listQuantity.push(quantity);
+            }
+        }
+
+        let content = `<table class="table table-success table-striped" id='tableAttachFacility' >`
+        content += `<tr><td><input  name="listIdAttach" value="${listAttachFacilityId.toString()}"></td>`;
+        content += `<td><input  name="listQuality" value="${listQuantity.toString()}"></td></tr>`
+        for (let i = 0; i < listQuantity.length; i++) {
+            content += `<tr><td>${listNameAttachFacility[i]}</td>`
+            content += `<td>${listQuantity[i]}</td></tr>`
         }
         content += " </table>"
         $("#container").html(content);
         setTotalMoneyAdd();
+    }
+
+    function isAttachFacilityContain(idAttachFacility) {
+        for (let i = 0; i < listAttachFacilityId.length; i++) {
+            if (idAttachFacility === listAttachFacilityId[i]) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     function setTotalMoneyAdd() {
@@ -196,7 +196,7 @@
         if (!isNaN(parseInt(document.getElementById("quality").value))) {
             isGetFacility = false;
             quantity = parseInt(document.getElementById("quality").value);
-            idAttachFacility = parseInt(document.getElementById("attach").value);
+            idAttachFacility = parseInt(document.getElementById("attachListAdd").value);
         }
         let idFacility = parseInt(document.getElementById("facilityId").value);
         $.ajax({
@@ -217,11 +217,12 @@
                 }
                 // không gắn bằng null nó vẫn giữ giá trị
                 document.getElementById("quality").value = null;
-                document.getElementById("attach").value = null;
+                document.getElementById("attachListAdd").value = null;
                 document.getElementById("totalMoney").value = totalMoney;
             }
         })
     }
+
 
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
